@@ -3,12 +3,14 @@ package com.example.mycampgear;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SubActivity extends AppCompatActivity {
+public class SubActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private static final String[] scenes = {
             "Ventnor",
             "Wroxall",
@@ -60,5 +62,27 @@ public class SubActivity extends AppCompatActivity {
         // ListViewにadapterをセット
         listView.setAdapter(adapter);
 
+        // クリックリスナーをセット
+        listView.setOnItemClickListener(this);
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View v,
+                            int position, long id) {
+
+        System.out.println("clicked");
+        Intent intent = new Intent(
+                this.getApplicationContext(), DetailActivity.class);
+
+        // clickされたpositionのtextとphotoのID
+        String selectedText = scenes[position];
+        int selectedPhoto = photos[position];
+        // インテントにセット
+        intent.putExtra("Text", selectedText);
+        intent.putExtra("Photo", selectedPhoto);
+
+        // SubActivityへ遷移
+        startActivity(intent);
     }
 }
