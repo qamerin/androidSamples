@@ -46,7 +46,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         // BaseAdapter を継承したadapterのインスタンスを生成
         // レイアウトファイル list.xml を activity_main.xml に
         // inflate するためにadapterに引数として渡す
-        BaseAdapter adapter = new ListViewAdapter(this.getApplicationContext(),
+        BaseAdapter adapter = new EventListViewAdapter(this.getApplicationContext(),
                 R.layout.list_add_item, scenes, photos);
 
         // ListViewにadapterをセット
@@ -65,7 +65,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
 
                 // clickされたpositionのtextとphotoのID
                 Intent intent = new Intent(AddItemActivity.this,
-                        SubActivity.class);
+                        EventActivity.class);
 
                 String selectedText = scenes[0];
                 int selectedPhoto = photos[0];

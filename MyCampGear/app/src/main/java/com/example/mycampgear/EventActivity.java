@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SubActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class EventActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private static final String[] scenes = {
             "アメニティ・ドーム",
             "Wroxall",
@@ -56,8 +56,8 @@ public class SubActivity extends AppCompatActivity implements AdapterView.OnItem
         // BaseAdapter を継承したadapterのインスタンスを生成
         // レイアウトファイル list.xml を activity_main.xml に
         // inflate するためにadapterに引数として渡す
-        BaseAdapter adapter = new ListViewAdapter(this.getApplicationContext(),
-                R.layout.list_sub, scenes, photos);
+        BaseAdapter adapter = new ItemListViewAdapter(this.getApplicationContext(),
+                R.layout.list_item, scenes, photos);
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);
@@ -69,7 +69,7 @@ public class SubActivity extends AppCompatActivity implements AdapterView.OnItem
         add_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View vew){
-                Intent intent = new Intent(SubActivity.this, AddItemActivity.class);
+                Intent intent = new Intent(EventActivity.this, AddItemActivity.class);
                 startActivity(intent);
             }
         });

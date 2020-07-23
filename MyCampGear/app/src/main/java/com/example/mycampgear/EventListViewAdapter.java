@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ListViewAdapter extends BaseAdapter {
+public class EventListViewAdapter extends BaseAdapter {
 
     static class ViewHolder {
         TextView textView;
@@ -19,8 +19,8 @@ public class ListViewAdapter extends BaseAdapter {
     private String[] titles;
     private int[] ids;
 
-    ListViewAdapter(Context context, int itemLayoutId,
-                    String[] scenes, int[] photos) {
+    EventListViewAdapter(Context context, int itemLayoutId,
+                         String[] scenes, int[] photos) {
         super();
         this.inflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

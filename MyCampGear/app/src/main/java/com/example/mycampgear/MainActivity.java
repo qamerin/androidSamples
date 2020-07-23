@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // BaseAdapter を継承したadapterのインスタンスを生成
         // レイアウトファイル list.xml を activity_main.xml に
         // inflate するためにadapterに引数として渡す
-        BaseAdapter adapter = new ListViewAdapter(this.getApplicationContext(),
-                R.layout.list, scenes, photos);
+        BaseAdapter adapter = new EventListViewAdapter(this.getApplicationContext(),
+                R.layout.list_event, scenes, photos);
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             int position, long id) {
 
         Intent intent = new Intent(
-                this.getApplicationContext(), SubActivity.class);
+                this.getApplicationContext(), EventActivity.class);
 
         // clickされたpositionのtextとphotoのID
         String selectedText = scenes[position];

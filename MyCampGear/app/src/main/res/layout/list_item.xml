@@ -24,13 +24,25 @@
             android:text="Category" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/brand"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_margin="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
             android:textColor="#000"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/itemName"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:textColor="#000"
+            android:textSize="10sp" />
+
+
 
     </LinearLayout>
 
