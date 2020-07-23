@@ -20,6 +20,7 @@
         </ListView>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_add"

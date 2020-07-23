@@ -55,6 +55,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // クリックリスナーをセット
         listView.setOnItemClickListener(this);
 
+        View add_btn = findViewById(R.id.add_btn);
+        add_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View vew){
+                Intent intent = new Intent(MainActivity.this,AddActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

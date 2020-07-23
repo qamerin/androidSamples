@@ -57,7 +57,7 @@ public class SubActivity extends AppCompatActivity implements AdapterView.OnItem
         // レイアウトファイル list.xml を activity_main.xml に
         // inflate するためにadapterに引数として渡す
         BaseAdapter adapter = new ListViewAdapter(this.getApplicationContext(),
-                R.layout.list, scenes, photos);
+                R.layout.list_sub, scenes, photos);
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);
