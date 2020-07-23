@@ -6,26 +6,34 @@
     android:padding="16dp" >
 
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/event_title"
         android:layout_width="match_parent"
-        android:layout_height="171dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Event Name" />
 
-        <ImageView
-            android:id="@+id/selected_photo"
-            android:layout_width="135dp"
-            android:layout_height="128dp"
-            android:layout_margin="20dp"
-            android:contentDescription="@string/description"
-            android:scaleType="fitCenter" />
+    <EditText
+        android:id="@+id/event_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date" />
 
-        <TextView
-            android:id="@+id/selected_text"
-            android:layout_width="match_parent"
-            android:layout_height="63dp"
-            android:layout_marginTop="20dp"
-            android:textColor="#000"
-            android:textSize="20sp" />
-    </LinearLayout>
+    <EditText
+        android:id="@+id/event_description"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Description" />
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_add"
+        />
 </LinearLayout>
