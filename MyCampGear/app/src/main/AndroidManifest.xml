@@ -25,7 +25,11 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".AddActivity"
+            android:name=".AddEventActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".AddItemActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

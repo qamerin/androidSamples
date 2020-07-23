@@ -1,21 +1,21 @@
 package com.example.mycampgear;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+import androidx.appcompat.app.AppCompatActivity;
 
-
+public class AddItemActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private static final String[] scenes = {
-            "塩原グリーンビレッジ",
+            "サーカスTC",
             "Wroxall",
-            "Whitewell",
+            "サーカスTC",
             "Ryde",
             "StLawrence",
             "Lake",
@@ -38,16 +38,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_item);
 
         // ListViewのインスタンスを生成
-        ListView listView = findViewById(R.id.list_view);
+        ListView listView = findViewById(R.id.list_add_view);
 
         // BaseAdapter を継承したadapterのインスタンスを生成
         // レイアウトファイル list.xml を activity_main.xml に
         // inflate するためにadapterに引数として渡す
         BaseAdapter adapter = new ListViewAdapter(this.getApplicationContext(),
-                R.layout.list, scenes, photos);
+                R.layout.list_add_item, scenes, photos);
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);
@@ -55,23 +55,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // クリックリスナーをセット
         listView.setOnItemClickListener(this);
 
-        View add_btn = findViewById(R.id.add_btn);
-        add_btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View vew){
-                Intent intent = new Intent(MainActivity.this, AddEventActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v,
                             int position, long id) {
 
+        System.out.println("clicked");
         Intent intent = new Intent(
-                this.getApplicationContext(), SubActivity.class);
+                this.getApplicationContext(), DetailActivity.class);
 
         // clickされたpositionのtextとphotoのID
         String selectedText = scenes[position];

@@ -7,12 +7,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AddActivity extends AppCompatActivity {
+public class AddEventActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        setContentView(R.layout.activity_add_event);
 
         Intent intent = getIntent();
         // MainActivityからintentで受け取ったものを取り出す

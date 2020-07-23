@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class SubActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private static final String[] scenes = {
-            "Ventnor",
+            "アメニティ・ドーム",
             "Wroxall",
             "Whitewell",
             "Ryde",
@@ -65,6 +65,14 @@ public class SubActivity extends AppCompatActivity implements AdapterView.OnItem
         // クリックリスナーをセット
         listView.setOnItemClickListener(this);
 
+        View add_btn = findViewById(R.id.add_item_btn);
+        add_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View vew){
+                Intent intent = new Intent(SubActivity.this, AddItemActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
