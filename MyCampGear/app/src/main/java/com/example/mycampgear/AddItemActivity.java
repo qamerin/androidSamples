@@ -2,12 +2,12 @@ package com.example.mycampgear;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -55,6 +55,26 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         // クリックリスナーをセット
         listView.setOnItemClickListener(this);
 
+
+        View add_btn = findViewById(R.id.add_item_btn);
+        add_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View vew){
+                String toastMessage = "アイテムの追加が行われました";
+                toastMake(toastMessage, 0, -200);
+
+                // clickされたpositionのtextとphotoのID
+                Intent intent = new Intent(AddItemActivity.this,
+                        SubActivity.class);
+
+                String selectedText = scenes[0];
+                int selectedPhoto = photos[0];
+                // インテントにセット
+                intent.putExtra("Text", selectedText);
+                intent.putExtra("Photo", selectedPhoto);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -74,5 +94,12 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
 
         // SubActivityへ遷移
         startActivity(intent);
+    }
+
+    private void toastMake(String message, int x, int y){
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        // 位置調整
+        toast.setGravity(Gravity.CENTER, x, y);
+        toast.show();
     }
 }

@@ -73,7 +73,8 @@ public class SubActivity extends AppCompatActivity implements AdapterView.OnItem
                 startActivity(intent);
             }
         });
-    }
+
+        }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v,
