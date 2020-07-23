@@ -6,14 +6,28 @@
     android:padding="16dp" >
 
 
-    <SearchView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <SearchView
+            android:layout_width="301dp"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="71dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="@string/btn_add_item" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/list_add_view"
         android:layout_width="match_parent"
-        android:layout_height="544dp">
+        android:layout_height="531dp">
 
     </ListView>
 

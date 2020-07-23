@@ -2,5 +2,6 @@
     <string name="app_name">MyCampGear</string>
     <string name="description">picture</string>
     <string name="btn_add">add</string>
+    <string name="btn_add_item">Add Item</string>
 
 </resources>
