@@ -3,5 +3,6 @@
     <string name="description">picture</string>
     <string name="btn_add">add</string>
     <string name="btn_add_item">Add Item</string>
-
+    <string name="pick_date">Pick Date</string>
+    <string name="no_date">No Data</string>
 </resources>
