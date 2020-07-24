@@ -20,6 +20,10 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.mycampgear.db.EventOpenHelper;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class AddEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -41,6 +45,11 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 // タイトルと内容を取得してデータベースに登録する
                 EditText editTextTitle = findViewById(R.id.event_title);
                 EditText editTextContent = findViewById(R.id.event_description);
+                EditText editTextDate = findViewById(R.id.event_date);
+
+                String dob_var=(editTextDate.getText().toString());
+                DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                Date dateObject;
 
                 SQLiteOpenHelper helper = new EventOpenHelper(AddEventActivity.this);
                 SQLiteDatabase database = null;
@@ -50,6 +59,9 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
 
                     ContentValues cv = new ContentValues();
                     cv.put("title", editTextTitle.getText().toString());
+                    dateObject = formatter.parse(dob_var);
+                    cv.put("date",
+                            new SimpleDateFormat("yyyy-MM-dd").format(dateObject));
                     cv.put("content", editTextContent.getText().toString());
 
                     database.insert("Event", null, cv);
