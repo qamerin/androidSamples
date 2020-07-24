@@ -10,7 +10,7 @@ public class EventOpenHelper extends SQLiteOpenHelper {
     private static final String FILE_NAME = "EventEntity";
     private static final int VERSION = 1;
 
-    private static final String DDL = "CREATE TABLE TodoEntity ( _id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT)";
+    private static final String DDL = "CREATE TABLE Event ( _id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT)";
 
     public EventOpenHelper(Context context) {
         super(context, FILE_NAME, null, VERSION);
