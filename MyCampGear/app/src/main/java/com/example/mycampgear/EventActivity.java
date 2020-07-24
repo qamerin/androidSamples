@@ -69,8 +69,8 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
         add_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View vew){
-                Intent intent = new Intent(EventActivity.this, AddItemActivity.class);
-                startActivity(intent);
+                // return to MainActivity
+                finish();
             }
         });
 
