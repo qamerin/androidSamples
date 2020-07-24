@@ -23,6 +23,18 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
             "Shanklin"
     };
 
+    private static final String[] dates = {
+            "2020/10/19",
+            "2020/10/19",
+            "2020/10/19",
+            "2020/10/19",
+            "2020/10/19",
+            "2020/10/19",
+            "2020/10/19",
+            "2020/10/19",
+            "2020/10/19",
+    };
+
     // ちょっと冗長的ですが分かり易くするために
     private static final int[] photos = {
             R.drawable.profile,
@@ -47,7 +59,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         // レイアウトファイル list.xml を activity_main.xml に
         // inflate するためにadapterに引数として渡す
         BaseAdapter adapter = new EventListViewAdapter(this.getApplicationContext(),
-                R.layout.list_add_item, scenes, photos);
+                R.layout.list_add_item, scenes,dates, photos);
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);

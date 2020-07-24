@@ -11,21 +11,24 @@ public class EventListViewAdapter extends BaseAdapter {
 
     static class ViewHolder {
         TextView textView;
+        TextView dateView;
         ImageView imageView;
     }
 
     private LayoutInflater inflater;
     private int itemLayoutId;
     private String[] titles;
+    private String[] dates;
     private int[] ids;
 
     EventListViewAdapter(Context context, int itemLayoutId,
-                         String[] scenes, int[] photos) {
+                         String[] scenes, String[] dates, int[] photos) {
         super();
         this.inflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemLayoutId = itemLayoutId;
         this.titles = scenes;
+        this.dates = dates;
         this.ids = photos;
     }
 
@@ -39,6 +42,7 @@ public class EventListViewAdapter extends BaseAdapter {
             // ViewHolder を生成
             holder = new ViewHolder();
             holder.textView = convertView.findViewById(R.id.textView);
+            holder.dateView = convertView.findViewById(R.id.dateView);
             holder.imageView = convertView.findViewById(R.id.imageView);
             convertView.setTag(holder);
         }
@@ -51,6 +55,7 @@ public class EventListViewAdapter extends BaseAdapter {
         holder.imageView.setImageResource(ids[position]);
         // 現在の position にあるファイル名リストを holder の textView にセット
         holder.textView.setText(titles[position]);
+        holder.dateView.setText(dates[position]);
 
         return convertView;
     }
