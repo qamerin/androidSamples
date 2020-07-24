@@ -42,10 +42,13 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
         Intent intent = getIntent();
         // MainActivityからintentで受け取ったものを取り出す
         String selectedText = intent.getStringExtra("Text");
+        String selectedDate = intent.getStringExtra("Date");
         int selectedPhoto = intent.getIntExtra("Photo", 0);
 
         TextView textView = findViewById(R.id.selected_text);
         textView.setText(selectedText);
+        TextView dateView = findViewById(R.id.selected_date);
+        dateView.setText(selectedDate);
         ImageView  imageView = findViewById(R.id.selected_photo);
         imageView.setImageResource(selectedPhoto);
 
