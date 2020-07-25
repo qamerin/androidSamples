@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         try {
             database = helper.getReadableDatabase();
 
-            cursor = database.query("Event", null, null, null, null, null, null);
+            cursor = database.query("T_Event", null, null, null, null, null, null);
 
             if (cursor.moveToFirst()) {
                 do {

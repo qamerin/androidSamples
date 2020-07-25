@@ -37,7 +37,7 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub);
+        setContentView(R.layout.activity_event);
 
         Intent intent = getIntent();
         // MainActivityからintentで受け取ったものを取り出す
@@ -72,8 +72,10 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
         add_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View vew){
-                // return to MainActivity
-                finish();
+
+                Intent intent = new Intent(EventActivity.this, AddItemActivity.class);
+                startActivity(intent);
+
             }
         });
 

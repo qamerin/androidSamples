@@ -55,7 +55,7 @@ public class EventListViewAdapter extends BaseAdapter {
         holder.imageView.setImageResource(ids[position]);
         // 現在の position にあるファイル名リストを holder の textView にセット
         holder.textView.setText(titles[position]);
-        holder.dateView.setText(dates[position]);
+//        holder.dateView.setText(dates[position]);
 
         return convertView;
     }

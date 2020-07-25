@@ -32,7 +32,6 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
             "2020/10/19",
             "2020/10/19",
             "2020/10/19",
-            "2020/10/19",
     };
 
     // ちょっと冗長的ですが分かり易くするために
@@ -58,14 +57,32 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         // BaseAdapter を継承したadapterのインスタンスを生成
         // レイアウトファイル list.xml を activity_main.xml に
         // inflate するためにadapterに引数として渡す
-        BaseAdapter adapter = new EventListViewAdapter(this.getApplicationContext(),
-                R.layout.list_add_item, scenes,dates, photos);
+//        BaseAdapter adapter = new EventListViewAdapter(this.getApplicationContext(),
+//                R.layout.list_add_item, scenes,dates, photos);
+        BaseAdapter adapter = new ItemListViewAdapter(this.getApplicationContext(),
+                R.layout.list_add_item, scenes, photos);
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);
 
         // クリックリスナーをセット
         listView.setOnItemClickListener(this);
+
+
+
+        View add_new_item_btn = findViewById(R.id.add_new_item);
+        add_new_item_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View vew){
+
+                // clickされたpositionのtextとphotoのID
+                Intent intent = new Intent(AddItemActivity.this,
+                        ItemRegisterActivity.class);
+
+                startActivity(intent);
+            }
+        });
+
 
 
         View add_btn = findViewById(R.id.add_item_btn);

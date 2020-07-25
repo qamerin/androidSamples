@@ -22,14 +22,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class ItemRegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private EditText editTextDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event);
+        setContentView(R.layout.activity_item_register);
 
         editTextDate = findViewById(R.id.label_branc);
 
@@ -47,7 +47,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
                 Date dateObject;
 
-                SQLiteOpenHelper helper = new EventOpenHelper(AddEventActivity.this);
+                SQLiteOpenHelper helper = new EventOpenHelper(ItemRegisterActivity.this);
                 SQLiteDatabase database = null;
 
                 try {
@@ -60,7 +60,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                             new SimpleDateFormat("yyyy-MM-dd").format(dateObject));
                     cv.put("content", editTextContent.getText().toString());
 
-                    database.insert("T_EVENT", null, cv);
+                    database.insert("T_Event", null, cv);
 
 
                     String toastMessage = "イベントの追加が行われました";

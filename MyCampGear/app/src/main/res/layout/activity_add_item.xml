@@ -16,7 +16,7 @@
             android:layout_height="wrap_content" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/cancel_button"
+            android:id="@+id/add_new_item"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="71dp"
             android:layout_height="wrap_content"
