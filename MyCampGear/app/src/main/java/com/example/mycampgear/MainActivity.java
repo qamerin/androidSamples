@@ -120,10 +120,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // clickされたpositionのtextとphotoのID
         String selectedTitle = eventArray[position];
         String selectedDate = dateArray[position];
+        String selectedDescription = descriptionArray[position];
         int selectedPhoto = photos[position];
         // インテントにセット
         intent.putExtra("Text", selectedTitle);
         intent.putExtra("Date", selectedDate);
+        intent.putExtra("Description", selectedDescription);
         intent.putExtra("Photo", selectedPhoto);
 
         // SubActivityへ遷移

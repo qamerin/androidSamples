@@ -2,9 +2,7 @@ package com.example.mycampgear;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +19,7 @@ public class DetailActivity extends AppCompatActivity {
         String selectedText = intent.getStringExtra("Text");
         int selectedPhoto = intent.getIntExtra("Photo", 0);
 
-        TextView textView = findViewById(R.id.selected_text);
+        TextView textView = findViewById(R.id.selected_event);
         textView.setText(selectedText);
         ImageView  imageView = findViewById(R.id.selected_photo);
         imageView.setImageResource(selectedPhoto);

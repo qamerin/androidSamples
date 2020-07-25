@@ -20,7 +20,7 @@
             android:scaleType="fitCenter" />
 
         <TextView
-            android:id="@+id/selected_text"
+            android:id="@+id/selected_event"
             android:layout_width="match_parent"
             android:layout_height="63dp"
             android:layout_marginTop="20dp"
