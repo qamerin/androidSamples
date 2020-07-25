@@ -40,7 +40,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
 
                 // タイトルと内容を取得してデータベースに登録する
                 EditText editTextTitle = findViewById(R.id.input_category);
-                EditText editTextContent = findViewById(R.id.event_description);
+                EditText editTextContent = findViewById(R.id.input_description);
                 EditText editTextDate = findViewById(R.id.label_branc);
 
                 String dob_var=(editTextDate.getText().toString());

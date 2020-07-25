@@ -23,7 +23,7 @@
         android:inputType="date" />
 
     <EditText
-        android:id="@+id/event_description"
+        android:id="@+id/input_description"
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:ems="10"
