@@ -105,9 +105,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // クリックリスナーをセット
         listView.setOnItemClickListener(this);
 
-
-
-
     }
         @Override
     public void onItemClick(AdapterView<?> parent, View v,

@@ -1,7 +1,11 @@
 package com.example.mycampgear;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,7 +15,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mycampgear.db.EventOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddItemActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+
+    private String[] categoryArray = null;
+    private String[] brandArray = null;
+    private String[] itemNameArray = null;
+    private String[] descriptionArray = null;
+
     private static final String[] scenes = {
             "サーカスTC",
             "Wroxall",
@@ -23,16 +38,6 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
             "Shanklin"
     };
 
-    private static final String[] dates = {
-            "2020/10/19",
-            "2020/10/19",
-            "2020/10/19",
-            "2020/10/19",
-            "2020/10/19",
-            "2020/10/19",
-            "2020/10/19",
-            "2020/10/19",
-    };
 
     // ちょっと冗長的ですが分かり易くするために
     private static final int[] photos = {
@@ -51,25 +56,6 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
-        // ListViewのインスタンスを生成
-        ListView listView = findViewById(R.id.list_add_view);
-
-        // BaseAdapter を継承したadapterのインスタンスを生成
-        // レイアウトファイル list.xml を activity_main.xml に
-        // inflate するためにadapterに引数として渡す
-//        BaseAdapter adapter = new EventListViewAdapter(this.getApplicationContext(),
-//                R.layout.list_add_item, scenes,dates, photos);
-        BaseAdapter adapter = new ItemListViewAdapter(this.getApplicationContext(),
-                R.layout.list_add_item, scenes, photos);
-
-        // ListViewにadapterをセット
-        listView.setAdapter(adapter);
-
-        // クリックリスナーをセット
-        listView.setOnItemClickListener(this);
-
-
-
         View add_new_item_btn = findViewById(R.id.add_new_item);
         add_new_item_btn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -82,7 +68,6 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                 startActivity(intent);
             }
         });
-
 
 
         View add_btn = findViewById(R.id.add_item_btn);
@@ -104,6 +89,73 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                 startActivity(intent);
             }
         });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // 全てのM_ITEMの情報を取得し、Listに格納する
+        List<String> categoryList = new ArrayList<>();
+        List<String> brandList = new ArrayList<>();
+        List<String> itemNameList = new ArrayList<>();
+        List<String> descriptionList = new ArrayList<>();
+        SQLiteOpenHelper helper = new EventOpenHelper(this);
+        SQLiteDatabase database = null;
+        Cursor cursor = null;
+
+        try {
+            database = helper.getReadableDatabase();
+
+            cursor = database.query("M_ITEM", null, null, null, null, null, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    String category = cursor.getString(cursor.getColumnIndex("category"));
+                    String brand = cursor.getString(cursor.getColumnIndex("brand"));
+                    String itemName = cursor.getString(cursor.getColumnIndex("item_name"));
+                    String description = cursor.getString(cursor.getColumnIndex("description"));
+
+                    categoryList.add(category);
+                    brandList.add(brand);
+                    itemNameList.add(itemName);
+                    descriptionList.add(description);
+
+                } while (cursor.moveToNext());
+            }
+
+        } catch (Exception e) {
+            Log.e(getLocalClassName(), "DBエラー発生", e);
+        } finally {
+            if (database != null) {
+                database.close();
+            }
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        categoryArray = categoryList.toArray(new String[categoryList.size()]);
+        brandArray = brandList.toArray(new String[brandList.size()]);
+        itemNameArray = itemNameList.toArray(new String[itemNameList.size()]);
+        descriptionArray = descriptionList.toArray(new String[descriptionList.size()]);
+
+        // ListViewのインスタンスを生成
+        ListView listView = findViewById(R.id.list_add_view);
+
+        // BaseAdapter を継承したadapterのインスタンスを生成
+        // レイアウトファイル list.xml を activity_main.xml に
+        // inflate するためにadapterに引数として渡す
+        BaseAdapter adapter = new AddItemListViewAdapter(this.getApplicationContext(),
+                R.layout.list_add_item, categoryArray,brandArray,itemNameArray,descriptionArray, photos);
+
+        // ListViewにadapterをセット
+        listView.setAdapter(adapter);
+
+        // クリックリスナーをセット
+        listView.setOnItemClickListener(this);
+
+
     }
 
     @Override
