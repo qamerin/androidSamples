@@ -23,8 +23,8 @@ public class EventListViewAdapter extends BaseAdapter {
     private String[] dates;
     private int[] ids;
 
-    EventListViewAdapter(Context context, int itemLayoutId,
-                         String[] scenes, String[] dates, int[] photos) {
+    public EventListViewAdapter(Context context, int itemLayoutId,
+                                String[] scenes, String[] dates, int[] photos) {
         super();
         this.inflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

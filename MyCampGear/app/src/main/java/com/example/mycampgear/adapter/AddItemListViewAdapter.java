@@ -27,7 +27,7 @@ public class AddItemListViewAdapter extends BaseAdapter {
     private String[] description;
     private int[] ids;
 
-    AddItemListViewAdapter(Context context, int itemLayoutId,
+    public AddItemListViewAdapter(Context context, int itemLayoutId,
                            String[] category,String[] brand,String[] itemName,
                            String[] description, int[] photos) {
         super();

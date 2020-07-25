@@ -22,7 +22,7 @@ public class ItemListViewAdapter extends BaseAdapter {
     private String[] titles;
     private int[] ids;
 
-    ItemListViewAdapter(Context context, int itemLayoutId,
+    public ItemListViewAdapter(Context context, int itemLayoutId,
                         String[] scenes, int[] photos) {
         super();
         this.inflater = (LayoutInflater)
