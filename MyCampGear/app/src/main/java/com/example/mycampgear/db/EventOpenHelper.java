@@ -14,7 +14,7 @@ public class EventOpenHelper extends SQLiteOpenHelper {
             " _event_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             " title TEXT," +
             " date DATE," +
-            " content TEXT" +
+            " description TEXT" +
             ")";
 
     private static final String DDL_T_ITEM = "CREATE TABLE T_ITEM ( " +

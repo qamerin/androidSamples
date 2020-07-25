@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private String[] eventArray = null;
     private String[] dateArray = null;
+    private String[] descriptionArray = null;
 
     // ちょっと冗長的ですが分かり易くするために
     private static final int[] photos = {
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // 全てのEventのタイトルを取得し、Listに格納する
         List<String> eventList = new ArrayList<>();
         List<String> dateList = new ArrayList<>();
+        List<String> descriptionList = new ArrayList<>();
         SQLiteOpenHelper helper = new EventOpenHelper(this);
         SQLiteDatabase database = null;
         Cursor cursor = null;
@@ -71,8 +73,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 do {
                     String title = cursor.getString(cursor.getColumnIndex("title"));
                     String date = cursor.getString(cursor.getColumnIndex("date"));
+                    String description = cursor.getString(cursor.getColumnIndex("description"));
                     eventList.add(title);
                     dateList.add(date);
+                    descriptionList.add(description);
                 } while (cursor.moveToNext());
             }
 
@@ -88,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         eventArray = eventList.toArray(new String[eventList.size()]);
         dateArray = dateList.toArray(new String[dateList.size()]);
+        descriptionArray = descriptionList.toArray(new String[descriptionList.size()]);
 
         // ListViewのインスタンスを生成
         ListView listView = findViewById(R.id.list_view);
@@ -96,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // レイアウトファイル list.xml を activity_main.xml に
         // inflate するためにadapterに引数として渡す
         BaseAdapter adapter = new EventListViewAdapter(this.getApplicationContext(),
-                R.layout.list_event, eventArray,dateArray ,photos);
+                R.layout.list_event, eventArray,dateArray,descriptionArray ,photos);
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);

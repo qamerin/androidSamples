@@ -59,7 +59,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                     dateObject = formatter.parse(dob_var);
                     cv.put("date",
                             new SimpleDateFormat("yyyy-MM-dd").format(dateObject));
-                    cv.put("content", editTextContent.getText().toString());
+                    cv.put("description", editTextContent.getText().toString());
 
                     database.insert("T_EVENT", null, cv);
 
