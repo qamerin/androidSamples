@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mycampgear.adapter.AddItemListViewAdapter;
 import com.example.mycampgear.db.EventOpenHelper;
 
 import java.util.ArrayList;

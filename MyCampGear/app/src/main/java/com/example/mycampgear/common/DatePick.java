@@ -1,4 +1,4 @@
-package com.example.mycampgear;
+package com.example.mycampgear.common;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

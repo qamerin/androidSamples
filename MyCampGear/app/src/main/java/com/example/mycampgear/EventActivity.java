@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.mycampgear.adapter.ItemListViewAdapter;
+
 public class EventActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private static final String[] scenes = {
             "アメニティ・ドーム",

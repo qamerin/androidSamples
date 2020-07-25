@@ -1,4 +1,4 @@
-package com.example.mycampgear;
+package com.example.mycampgear.adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,26 +7,38 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ItemListViewAdapter extends BaseAdapter {
+import com.example.mycampgear.R;
+
+public class AddItemListViewAdapter extends BaseAdapter {
 
     static class ViewHolder {
+        TextView category;
         TextView brand;
         TextView itemName;
+        TextView description;
         ImageView imageView;
     }
 
     private LayoutInflater inflater;
     private int itemLayoutId;
-    private String[] titles;
+    private String[] category;
+    private String[] brand;
+    private String[] itemName;
+    private String[] description;
     private int[] ids;
 
-    ItemListViewAdapter(Context context, int itemLayoutId,
-                        String[] scenes, int[] photos) {
+    AddItemListViewAdapter(Context context, int itemLayoutId,
+                           String[] category,String[] brand,String[] itemName,
+                           String[] description, int[] photos) {
         super();
         this.inflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemLayoutId = itemLayoutId;
-        this.titles = scenes;
+        this.category = category;
+        this.brand = brand;
+        this.itemName = itemName;
+        this.description = description;
+
         this.ids = photos;
     }
 
@@ -42,6 +54,8 @@ public class ItemListViewAdapter extends BaseAdapter {
             holder.brand = convertView.findViewById(R.id.brand);
             holder.itemName = convertView.findViewById(R.id.itemName);
             holder.imageView = convertView.findViewById(R.id.imageView);
+            holder.category = convertView.findViewById(R.id.category);
+            holder.description = convertView.findViewById(R.id.descption);
             convertView.setTag(holder);
         }
         // holder を使って再利用
@@ -52,16 +66,17 @@ public class ItemListViewAdapter extends BaseAdapter {
         // holder の imageView にセット
         holder.imageView.setImageResource(ids[position]);
         // 現在の position にあるファイル名リストを holder の textView にセット
-        holder.brand.setText(titles[position]);
-        holder.itemName.setText(titles[position]);
-
+        holder.category.setText(category[position]);
+        holder.brand.setText(brand[position]);
+        holder.itemName.setText(itemName[position]);
+        holder.description.setText(description[position]);
         return convertView;
     }
 
     @Override
     public int getCount() {
         // texts 配列の要素数
-        return titles.length;
+        return category.length;
     }
 
     @Override
