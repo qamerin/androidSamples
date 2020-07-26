@@ -21,6 +21,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
+    private Integer[] eventIdArray = null;
     private String[] eventArray = null;
     private String[] dateArray = null;
     private String[] descriptionArray = null;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onResume() {
         super.onResume();
         // 全てのEventのタイトルを取得し、Listに格納する
+        List<Integer> eventIdList = new ArrayList<>();
         List<String> eventList = new ArrayList<>();
         List<String> dateList = new ArrayList<>();
         List<String> descriptionList = new ArrayList<>();
@@ -71,9 +73,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             if (cursor.moveToFirst()) {
                 do {
+                    Integer eventId = cursor.getInt(cursor.getColumnIndex("_event_id"));
                     String title = cursor.getString(cursor.getColumnIndex("title"));
                     String date = cursor.getString(cursor.getColumnIndex("date"));
                     String description = cursor.getString(cursor.getColumnIndex("description"));
+                    eventIdList.add(eventId);
                     eventList.add(title);
                     dateList.add(date);
                     descriptionList.add(description);
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 cursor.close();
             }
         }
+        eventIdArray = eventIdList.toArray(new Integer[eventIdList.size()]);
         eventArray = eventList.toArray(new String[eventList.size()]);
         dateArray = dateList.toArray(new String[dateList.size()]);
         descriptionArray = descriptionList.toArray(new String[descriptionList.size()]);
@@ -118,11 +123,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 this.getApplicationContext(), EventActivity.class);
 
         // clickされたpositionのtextとphotoのID
+        int selectedEventId= eventIdArray[position];
         String selectedTitle = eventArray[position];
         String selectedDate = dateArray[position];
         String selectedDescription = descriptionArray[position];
         int selectedPhoto = photos[position];
         // インテントにセット
+        intent.putExtra("EventId", selectedEventId);
         intent.putExtra("Text", selectedTitle);
         intent.putExtra("Date", selectedDate);
         intent.putExtra("Description", selectedDescription);

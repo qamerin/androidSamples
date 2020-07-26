@@ -43,6 +43,7 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
 
         Intent intent = getIntent();
         // MainActivityからintentで受け取ったものを取り出す
+        final int eventId = intent.getIntExtra("EventId",0);
         String selectedText = intent.getStringExtra("Text");
         String selectedDate = intent.getStringExtra("Date");
         String selectedDescription = intent.getStringExtra("Description");
@@ -80,6 +81,7 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
             public void onClick(View vew){
 
                 Intent intent = new Intent(EventActivity.this, AddItemActivity.class);
+                intent.putExtra("EventId", eventId);
                 startActivity(intent);
 
             }
