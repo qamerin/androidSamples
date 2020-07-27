@@ -4,13 +4,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mycampgear.AddItemList;
+import com.example.mycampgear.entity.AddItemList;
 import com.example.mycampgear.R;
 
 import java.util.HashMap;
@@ -27,16 +26,6 @@ public class AddItemArrayListViewAdapter extends ArrayAdapter<AddItemList> {
     // 外部から呼び出し可能なマップ
     public Map<Integer,Boolean> checkList = new HashMap<>();
 
-
-
-
-    static class ViewHolder {
-        TextView category;
-//        TextView brand;
-//        TextView itemName;
-        TextView description;
-//        ImageView imageView;
-    }
 
     private LayoutInflater inflater;
     private int itemLayoutId;
@@ -73,14 +62,22 @@ public class AddItemArrayListViewAdapter extends ArrayAdapter<AddItemList> {
         // リストビューに表示する要素を取得
         AddItemList item = mItems.get(position);
 
-//        // サムネイル画像を設定
-//        ImageView thumbnail = (ImageView)view.findViewById(R.id.list_thumbnail);
-//        thumbnail.setImageBitmap(item.getThumbnail());
+        // サムネイル画像を設定
+        ImageView thumbnail = (ImageView)view.findViewById(R.id.imageView);
+//        thumbnail.setImageBitmap(item.getI
 
-        // タイトルを設定
+        // Category
         TextView category = (TextView)view.findViewById(R.id.category);
         category.setText(item.getCategory());
 
+        TextView brand = (TextView)view.findViewById(R.id.brand);
+        brand.setText(item.getBrand());
+
+        TextView itemName = (TextView)view.findViewById(R.id.itemName);
+        itemName.setText(item.getItemName());
+
+        TextView description = (TextView)view.findViewById(R.id.descption);
+        description.setText(item.getDescription());
 
         CheckBox ch = view.findViewById(R.id.checkbox_1);
 

@@ -10,9 +10,7 @@ import android.util.SparseBooleanArray;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +18,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mycampgear.adapter.AddItemArrayListViewAdapter;
-import com.example.mycampgear.adapter.AddItemListViewAdapter;
 import com.example.mycampgear.db.EventOpenHelper;
+import com.example.mycampgear.entity.AddItemList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,6 +121,8 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
 
                     AddItemList item = new AddItemList();
                     item.setCategory(category);
+                    item.setBrand(brand);
+                    item.setItemName(itemName);
                     item.setDescription(description);
                     mItems.add(item);
 
