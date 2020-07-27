@@ -14,10 +14,12 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mycampgear.adapter.AddItemArrayListViewAdapter;
 import com.example.mycampgear.adapter.AddItemListViewAdapter;
 import com.example.mycampgear.db.EventOpenHelper;
 
@@ -100,6 +102,8 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         SQLiteDatabase database = null;
         Cursor cursor = null;
 
+        List<AddItemList> mItems = new ArrayList<>();
+
         try {
             database = helper.getReadableDatabase();
 
@@ -116,6 +120,11 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                     brandList.add(brand);
                     itemNameList.add(itemName);
                     descriptionList.add(description);
+
+                    AddItemList item = new AddItemList();
+                    item.setCategory(category);
+                    item.setDescription(description);
+                    mItems.add(item);
 
                 } while (cursor.moveToNext());
             }
@@ -142,8 +151,11 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         // BaseAdapter を継承したadapterのインスタンスを生成
         // レイアウトファイル list.xml を activity_main.xml に
         // inflate するためにadapterに引数として渡す
-        BaseAdapter adapter = new AddItemListViewAdapter(this.getApplicationContext(),
-                R.layout.list_add_item, categoryArray, brandArray, itemNameArray, descriptionArray, photos);
+//        BaseAdapter adapter = new AddItemListViewAdapter(this.getApplicationContext(),
+//                R.layout.list_add_item, categoryArray, brandArray, itemNameArray, descriptionArray, photos);
+
+        AddItemArrayListViewAdapter adapter = new AddItemArrayListViewAdapter(this, R.layout.list_add_item, mItems);
+
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);
@@ -173,6 +185,23 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
 
                 // フォーカスが当たらないよう設定
                 listView.setItemsCanFocus(false);
+
+                // リストビューのチェック状態をログに出力する
+                ListView lv = findViewById(R.id.list_add_view);
+                for(int i = 0;i < lv.getCount();i++) {
+                    AddItemArrayListViewAdapter adapter = (AddItemArrayListViewAdapter)lv.getAdapter();
+                    View view = adapter.getView(i,null,lv);
+                    TextView tv = view.findViewById(R.id.category);
+                    Log.i("Category : ", tv.getText().toString());
+                    CheckBox cb = view.findViewById(R.id.checkbox_1);
+
+                    if(adapter.checkList.get(i))
+                        Log.i("MyTAG", tv.getText().toString()+"はtrueです。");
+                    else
+                        Log.i("MyTAG", tv.getText().toString()+"はfalseです。");
+
+                }
+
 
                 // 選択の方式の設定
                 listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
