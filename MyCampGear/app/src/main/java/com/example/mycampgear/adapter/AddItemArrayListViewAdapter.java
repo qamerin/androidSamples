@@ -70,6 +70,9 @@ public class AddItemArrayListViewAdapter extends ArrayAdapter<AddItemList> {
         TextView category = (TextView)view.findViewById(R.id.category);
         category.setText(item.getCategory());
 
+        TextView itemId = (TextView)view.findViewById(R.id.itemId);
+        itemId.setText(String.valueOf(item.getItemId()));
+
         TextView brand = (TextView)view.findViewById(R.id.brand);
         brand.setText(item.getBrand());
 

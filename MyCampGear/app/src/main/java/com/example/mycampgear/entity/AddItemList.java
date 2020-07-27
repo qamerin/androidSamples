@@ -1,11 +1,21 @@
 package com.example.mycampgear.entity;
 
 public class AddItemList {
+    private int itemId = 0;
     boolean checkd = false;
     private String category = null;
     private String description = null;
     private String brand = null;
     private String itemName = null;
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
 
     public String getBrand() {
         return brand;

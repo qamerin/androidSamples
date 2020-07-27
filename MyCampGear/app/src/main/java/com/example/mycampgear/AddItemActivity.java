@@ -109,6 +109,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
 
             if (cursor.moveToFirst()) {
                 do {
+                    int itemId = cursor.getInt(cursor.getColumnIndex("_item_id"));
                     String category = cursor.getString(cursor.getColumnIndex("category"));
                     String brand = cursor.getString(cursor.getColumnIndex("brand"));
                     String itemName = cursor.getString(cursor.getColumnIndex("item_name"));
@@ -120,6 +121,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                     descriptionList.add(description);
 
                     AddItemList item = new AddItemList();
+                    item.setItemId(itemId);
                     item.setCategory(category);
                     item.setBrand(brand);
                     item.setItemName(itemName);
