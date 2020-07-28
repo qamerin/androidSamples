@@ -1,5 +1,6 @@
 package com.example.mycampgear;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -188,43 +189,62 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                 // フォーカスが当たらないよう設定
                 listView.setItemsCanFocus(false);
 
+                Intent intent = getIntent();
+                int eventId = intent.getIntExtra("EventId",0);
+                System.out.println("Event Id : "+String.valueOf(eventId));
+
+                SQLiteOpenHelper helper = new EventOpenHelper(AddItemActivity.this);
+                SQLiteDatabase database = null;
+
+
                 // リストビューのチェック状態をログに出力する
                 ListView lv = findViewById(R.id.list_add_view);
                 for(int i = 0;i < lv.getCount();i++) {
                     AddItemArrayListViewAdapter adapter = (AddItemArrayListViewAdapter)lv.getAdapter();
                     View view = adapter.getView(i,null,lv);
                     TextView tv = view.findViewById(R.id.category);
+
                     Log.i("Category : ", tv.getText().toString());
                     CheckBox cb = view.findViewById(R.id.checkbox_1);
 
-                    if(adapter.checkList.get(i))
-                        Log.i("MyTAG", tv.getText().toString()+"はtrueです。");
-                    else
-                        Log.i("MyTAG", tv.getText().toString()+"はfalseです。");
+                    if(adapter.checkList.get(i)){
+                        Log.i("Checkbox", tv.getText().toString()+"はtrueです。");
+                        try {
+                            database = helper.getWritableDatabase();
 
-                }
+                            TextView itemId = view.findViewById(R.id.itemId);
+                            ContentValues cv = new ContentValues();
+                            cv.put("event_id", String.valueOf(eventId));
+                            cv.put("item_id", itemId.getText().toString());
+
+                            database.insert("T_ITEM", null, cv);
+
+                        } catch (Exception e) {
+                            Log.e(getLocalClassName(), "DBエラー発生", e);
+                        } finally {
+                            if (database != null) {
+                                database.close();
+                            }
+                        }
+
+                    } else {
+                        Log.i("Checkbox", tv.getText().toString() + "はfalseです。");
+                    }
 
 
-                // 選択の方式の設定
-                listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-                SparseBooleanArray checked = listView.getCheckedItemPositions();
-                for (int i = 0; i < checked.size(); i++) {
-                    // チェックされているアイテムの key の取得
-                    int key = checked.keyAt(i);
-                    Log.v(getClass().getSimpleName(), "values: " + key);
                 }
 
                 // clickされたpositionのtextとphotoのID
-                Intent intent = new Intent(AddItemActivity.this,
+                Intent intentToEventPage = new Intent(AddItemActivity.this,
                         EventActivity.class);
 
                 String selectedText = scenes[0];
                 int selectedPhoto = photos[0];
                 // インテントにセット
-                intent.putExtra("Text", selectedText);
-                intent.putExtra("Photo", selectedPhoto);
-                startActivity(intent);
+                intentToEventPage.putExtra("Text", selectedText);
+                intentToEventPage.putExtra("Photo", selectedPhoto);
+                startActivity(intentToEventPage);
             }
         });
     }
