@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mycampgear.adapter.AddItemArrayListViewAdapter;
 import com.example.mycampgear.db.EventOpenHelper;
-import com.example.mycampgear.entity.AddItemList;
+import com.example.mycampgear.entity.ItemEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
 
 
         Intent intent = getIntent();
-        int eventId = intent.getIntExtra("EventId",0);
+        final int eventId = intent.getIntExtra("EventId",0);
 
         View add_new_item_btn = findViewById(R.id.add_new_item);
         add_new_item_btn.setOnClickListener(new View.OnClickListener(){
@@ -74,6 +74,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                 Intent intent = new Intent(AddItemActivity.this,
                         ItemRegisterActivity.class);
 
+                intent.putExtra("EventId", eventId);
                 startActivity(intent);
             }
         });
@@ -91,7 +92,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         SQLiteDatabase database = null;
         Cursor cursor = null;
 
-        List<AddItemList> mItems = new ArrayList<>();
+        List<ItemEntity> mItems = new ArrayList<>();
 
         try {
             database = helper.getReadableDatabase();
@@ -106,7 +107,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                     String itemName = cursor.getString(cursor.getColumnIndex("item_name"));
                     String description = cursor.getString(cursor.getColumnIndex("description"));
 
-                    AddItemList item = new AddItemList();
+                    ItemEntity item = new ItemEntity();
                     item.setItemId(itemId);
                     item.setCategory(category);
                     item.setBrand(brand);
@@ -210,6 +211,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                 String selectedText = scenes[0];
                 int selectedPhoto = photos[0];
                 // インテントにセット
+                intentToEventPage.putExtra("EventId", eventId);
                 intentToEventPage.putExtra("Text", selectedText);
                 intentToEventPage.putExtra("Photo", selectedPhoto);
                 startActivity(intentToEventPage);

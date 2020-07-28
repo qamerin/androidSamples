@@ -1,8 +1,13 @@
 package com.example.mycampgear;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -11,18 +16,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.mycampgear.adapter.ItemListViewAdapter;
+import com.example.mycampgear.db.EventOpenHelper;
+import com.example.mycampgear.entity.ItemEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
-    private static final String[] scenes = {
-            "アメニティ・ドーム",
-            "Wroxall",
-            "Whitewell",
-            "Ryde",
-            "StLawrence",
-            "Lake",
-            "Sandown",
-            "Shanklin"
-    };
+//    private static final String[] scenes = {
+//            "アメニティ・ドーム",
+//            "Wroxall",
+//            "Whitewell",
+//            "Ryde",
+//            "StLawrence",
+//            "Lake",
+//            "Sandown",
+//            "Shanklin"
+//    };
 
     // ちょっと冗長的ですが分かり易くするために
     private static final int[] photos = {
@@ -36,10 +46,18 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
             R.drawable.profile,
     };
 
+    private List<ItemEntity> mItems = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         Intent intent = getIntent();
         // MainActivityからintentで受け取ったものを取り出す
@@ -60,6 +78,58 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
         imageView.setImageResource(selectedPhoto);
 
 
+
+
+        SQLiteOpenHelper helper = new EventOpenHelper(this);
+        SQLiteDatabase database = null;
+        Cursor cursorTItem = null;
+        Cursor cursorMItem = null;
+
+//        List<ItemEntity> mItems = new ArrayList<>();
+
+        try {
+            database = helper.getReadableDatabase();
+
+            cursorTItem = database.query("T_ITEM", null, "event_id=?", new String[]{String.valueOf(eventId)}, null, null, null, null);
+
+            if (cursorTItem.moveToFirst()) {
+                do {
+                    String itemId = cursorTItem.getString(cursorTItem.getColumnIndex("item_id"));
+
+                    cursorMItem = database.query("M_ITEM", null, "_item_id=?", new String[]{itemId}, null, null, null, null);
+
+                    if (cursorMItem.moveToFirst()) {
+                        do {
+                            String category = cursorMItem.getString(cursorMItem.getColumnIndex("category"));
+                            String brand = cursorMItem.getString(cursorMItem.getColumnIndex("brand"));
+                            String itemName = cursorMItem.getString(cursorMItem.getColumnIndex("item_name"));
+                            String description = cursorMItem.getString(cursorMItem.getColumnIndex("description"));
+
+                            ItemEntity item = new ItemEntity();
+                            item.setItemId(Integer.parseInt(itemId));
+                            item.setCategory(category);
+                            item.setBrand(brand);
+                            item.setItemName(itemName);
+                            item.setDescription(description);
+                            mItems.add(item);
+
+                        }while (cursorMItem.moveToNext());
+                    }
+
+                } while (cursorTItem.moveToNext());
+            }
+
+        } catch (Exception e) {
+            Log.e(getLocalClassName(), "DBエラー発生", e);
+        } finally {
+            if (database != null) {
+                database.close();
+            }
+            if (cursorTItem != null) {
+                cursorTItem.close();
+            }
+        }
+
         // ListViewのインスタンスを生成
         ListView listView = findViewById(R.id.list_view);
 
@@ -67,7 +137,8 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
         // レイアウトファイル list.xml を activity_main.xml に
         // inflate するためにadapterに引数として渡す
         BaseAdapter adapter = new ItemListViewAdapter(this.getApplicationContext(),
-                R.layout.list_item, scenes, photos);
+                R.layout.list_item,mItems);
+//                R.layout.list_item, scenes, photos);
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);
@@ -87,7 +158,8 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
-        }
+    }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View v,
@@ -98,7 +170,9 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
                 this.getApplicationContext(), DetailActivity.class);
 
         // clickされたpositionのtextとphotoのID
-        String selectedText = scenes[position];
+//        String selectedText = scenes[position];
+        String selectedText = mItems.get(position).getItemName() ;
+
         int selectedPhoto = photos[position];
         // インテントにセット
         intent.putExtra("Text", selectedText);

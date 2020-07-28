@@ -9,17 +9,17 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.mycampgear.entity.AddItemList;
+import com.example.mycampgear.entity.ItemEntity;
 import com.example.mycampgear.R;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AddItemArrayListViewAdapter extends ArrayAdapter<AddItemList> {
+public class AddItemArrayListViewAdapter extends ArrayAdapter<ItemEntity> {
 
     private int mResource;
-    private List<AddItemList> mItems;
+    private List<ItemEntity> mItems;
     private LayoutInflater mInflater;
 
 
@@ -35,7 +35,7 @@ public class AddItemArrayListViewAdapter extends ArrayAdapter<AddItemList> {
     private String[] description;
     private int[] ids;
 
-    public AddItemArrayListViewAdapter(Context context, int resource, List<AddItemList> items) {
+    public AddItemArrayListViewAdapter(Context context, int resource, List<ItemEntity> items) {
         super(context, resource, items);
         mResource = resource;
         mItems = items;
@@ -43,7 +43,7 @@ public class AddItemArrayListViewAdapter extends ArrayAdapter<AddItemList> {
 
         // 初期値を設定する
         for(int i=0; i<items.size();i++){
-            AddItemList map = (AddItemList)items.get(i);
+            ItemEntity map = (ItemEntity)items.get(i);
             checkList.put(i,(Boolean)map.isCheckd());
         }
     }
@@ -60,7 +60,7 @@ public class AddItemArrayListViewAdapter extends ArrayAdapter<AddItemList> {
         }
 
         // リストビューに表示する要素を取得
-        AddItemList item = mItems.get(position);
+        ItemEntity item = mItems.get(position);
 
         // サムネイル画像を設定
         ImageView thumbnail = (ImageView)view.findViewById(R.id.imageView);

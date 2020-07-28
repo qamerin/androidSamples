@@ -1,6 +1,6 @@
 package com.example.mycampgear.entity;
 
-public class AddItemList {
+public class ItemEntity {
     private int itemId = 0;
     boolean checkd = false;
     private String category = null;

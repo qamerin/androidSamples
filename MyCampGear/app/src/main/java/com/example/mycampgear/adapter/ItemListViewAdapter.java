@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mycampgear.R;
+import com.example.mycampgear.entity.ItemEntity;
+
+import java.util.List;
 
 public class ItemListViewAdapter extends BaseAdapter {
 
@@ -19,18 +22,29 @@ public class ItemListViewAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private int itemLayoutId;
-    private String[] titles;
-    private int[] ids;
+//    private String[] titles;
+//    private int[] ids;
+    private List<ItemEntity> itemEntities;
+
+//    public ItemListViewAdapter(Context context, int itemLayoutId,
+//                        String[] scenes, int[] photos) {
+//        super();
+//        this.inflater = (LayoutInflater)
+//                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        this.itemLayoutId = itemLayoutId;
+//        this.titles = scenes;
+//        this.ids = photos;
+//    }
 
     public ItemListViewAdapter(Context context, int itemLayoutId,
-                        String[] scenes, int[] photos) {
+                               List<ItemEntity> itemEntities) {
         super();
         this.inflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemLayoutId = itemLayoutId;
-        this.titles = scenes;
-        this.ids = photos;
+        this.itemEntities = itemEntities;
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -51,11 +65,15 @@ public class ItemListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+//        ItemEntity entity = itemEntities.get(position);
+//        itemEntities[position];
+
         // holder の imageView にセット
-        holder.imageView.setImageResource(ids[position]);
+//        TODO imageViewをセット
+//        holder.imageView.setImageResource(ids[position]);
         // 現在の position にあるファイル名リストを holder の textView にセット
-        holder.brand.setText(titles[position]);
-        holder.itemName.setText(titles[position]);
+        holder.brand.setText(itemEntities.get(position).getBrand());
+        holder.itemName.setText(itemEntities.get(position).getItemName());
 
         return convertView;
     }
@@ -63,7 +81,7 @@ public class ItemListViewAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         // texts 配列の要素数
-        return titles.length;
+        return itemEntities.size();
     }
 
     @Override
