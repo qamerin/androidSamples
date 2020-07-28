@@ -1,13 +1,18 @@
 package com.example.mycampgear;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,15 +21,31 @@ import androidx.fragment.app.DialogFragment;
 import com.example.mycampgear.common.DatePick;
 import com.example.mycampgear.db.EventOpenHelper;
 
+import java.io.ByteArrayOutputStream;
+
 
 public class ItemRegisterActivity extends AppCompatActivity {
 
+    private final static int RESULT_CAMERA = 1001;
+    private ImageView imageView;
+
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_register);
 
+        imageView = findViewById(R.id.image_view);
+
+        Button cameraButton = findViewById(R.id.camera_button);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, RESULT_CAMERA);
+            }
+        });
 
         View add_btn = findViewById(R.id.add_btn);
         add_btn.setOnClickListener(new View.OnClickListener(){
@@ -48,7 +69,12 @@ public class ItemRegisterActivity extends AppCompatActivity {
                     cv.put("brand", editTextBrand.getText().toString());
                     cv.put("item_name", editTextItem.getText().toString());
                     cv.put("description", editTextDesc.getText().toString());
-
+                    if (bitmap != null) {
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        byte[] bytes = byteArrayOutputStream.toByteArray();
+                        cv.put("image", bytes);
+                    }
                     database.insert("M_ITEM", null, cv);
 
                     String toastMessage = "アイテムの追加が行われました";
@@ -82,6 +108,30 @@ public class ItemRegisterActivity extends AppCompatActivity {
         // 位置調整
         toast.setGravity(Gravity.CENTER, x, y);
         toast.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_CAMERA) {
+//            Bitmap bitmap;
+            // cancelしたケースも含む
+            if (data.getExtras() == null) {
+                Log.d("debug", "cancel ?");
+                return;
+            } else {
+                bitmap = (Bitmap) data.getExtras().get("data");
+                if (bitmap != null) {
+                    // 画像サイズを計測
+                    int bmpWidth = bitmap.getWidth();
+                    int bmpHeight = bitmap.getHeight();
+                    Log.d("debug", String.format("w= %d", bmpWidth));
+                    Log.d("debug", String.format("h= %d", bmpHeight));
+                }
+            }
+
+            imageView.setImageBitmap(bitmap);
+        }
     }
 
 }

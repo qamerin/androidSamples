@@ -28,6 +28,7 @@ public class EventOpenHelper extends SQLiteOpenHelper {
             " category TEXT," +
             " brand TEXT," +
             " item_name TEXT," +
+            " image BLOB," +
              "description TEXT)";
 
     public EventOpenHelper(Context context) {
