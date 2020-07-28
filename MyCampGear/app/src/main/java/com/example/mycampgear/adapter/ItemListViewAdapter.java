@@ -17,24 +17,15 @@ public class ItemListViewAdapter extends BaseAdapter {
     static class ViewHolder {
         TextView brand;
         TextView itemName;
+        TextView category;
+        TextView description;
         ImageView imageView;
     }
 
     private LayoutInflater inflater;
     private int itemLayoutId;
-//    private String[] titles;
-//    private int[] ids;
     private List<ItemEntity> itemEntities;
 
-//    public ItemListViewAdapter(Context context, int itemLayoutId,
-//                        String[] scenes, int[] photos) {
-//        super();
-//        this.inflater = (LayoutInflater)
-//                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        this.itemLayoutId = itemLayoutId;
-//        this.titles = scenes;
-//        this.ids = photos;
-//    }
 
     public ItemListViewAdapter(Context context, int itemLayoutId,
                                List<ItemEntity> itemEntities) {
@@ -57,7 +48,9 @@ public class ItemListViewAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.brand = convertView.findViewById(R.id.brand);
             holder.itemName = convertView.findViewById(R.id.itemName);
-            holder.imageView = convertView.findViewById(R.id.imageView);
+            holder.imageView =convertView.findViewById(R.id.imageView);
+            holder.category =convertView.findViewById(R.id.category);
+            holder.description = convertView.findViewById(R.id.descption);
             convertView.setTag(holder);
         }
         // holder を使って再利用
@@ -65,15 +58,14 @@ public class ItemListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-//        ItemEntity entity = itemEntities.get(position);
-//        itemEntities[position];
-
         // holder の imageView にセット
-//        TODO imageViewをセット
-//        holder.imageView.setImageResource(ids[position]);
+        holder.imageView.setImageBitmap(itemEntities.get(position).getImage());
+
         // 現在の position にあるファイル名リストを holder の textView にセット
         holder.brand.setText(itemEntities.get(position).getBrand());
         holder.itemName.setText(itemEntities.get(position).getItemName());
+        holder.category.setText(itemEntities.get(position).getCategory());
+        holder.description.setText(itemEntities.get(position).getDescription());
 
         return convertView;
     }

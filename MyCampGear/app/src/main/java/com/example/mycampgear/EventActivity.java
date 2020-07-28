@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -104,12 +106,17 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
                             String brand = cursorMItem.getString(cursorMItem.getColumnIndex("brand"));
                             String itemName = cursorMItem.getString(cursorMItem.getColumnIndex("item_name"));
                             String description = cursorMItem.getString(cursorMItem.getColumnIndex("description"));
-
+                            byte[] dataValue = cursorMItem.getBlob(cursorMItem.getColumnIndex("image")); //image
+                            Bitmap bmp = null;
+                            if (dataValue != null) {
+                                bmp = BitmapFactory.decodeByteArray(dataValue, 0, dataValue.length);
+                            }
                             ItemEntity item = new ItemEntity();
                             item.setItemId(Integer.parseInt(itemId));
                             item.setCategory(category);
                             item.setBrand(brand);
                             item.setItemName(itemName);
+                            item.setImage(bmp);
                             item.setDescription(description);
                             mItems.add(item);
 

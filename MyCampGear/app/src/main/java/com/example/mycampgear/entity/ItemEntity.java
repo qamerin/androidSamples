@@ -1,5 +1,7 @@
 package com.example.mycampgear.entity;
 
+import android.graphics.Bitmap;
+
 public class ItemEntity {
     private int itemId = 0;
     boolean checkd = false;
@@ -7,6 +9,16 @@ public class ItemEntity {
     private String description = null;
     private String brand = null;
     private String itemName = null;
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
+
+    private Bitmap image = null;
 
     public int getItemId() {
         return itemId;

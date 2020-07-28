@@ -64,7 +64,7 @@ public class AddItemArrayListViewAdapter extends ArrayAdapter<ItemEntity> {
 
         // サムネイル画像を設定
         ImageView thumbnail = (ImageView)view.findViewById(R.id.imageView);
-//        thumbnail.setImageBitmap(item.getI
+        thumbnail.setImageBitmap(item.getImage());
 
         // Category
         TextView category = (TextView)view.findViewById(R.id.category);
@@ -81,6 +81,7 @@ public class AddItemArrayListViewAdapter extends ArrayAdapter<ItemEntity> {
 
         TextView description = (TextView)view.findViewById(R.id.descption);
         description.setText(item.getDescription());
+
 
         CheckBox ch = view.findViewById(R.id.checkbox_1);
 

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -57,11 +59,6 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
-
-                // ListViewのインスタンスを生成
-//        ListView listView = findViewById(R.id.list_add_view);
-
-
         Intent intent = getIntent();
         final int eventId = intent.getIntExtra("EventId",0);
 
@@ -105,6 +102,11 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                     String category = cursor.getString(cursor.getColumnIndex("category"));
                     String brand = cursor.getString(cursor.getColumnIndex("brand"));
                     String itemName = cursor.getString(cursor.getColumnIndex("item_name"));
+                    byte[] dataValue = cursor.getBlob(cursor.getColumnIndex("image")); //image
+                    Bitmap bmp = null;
+                    if (dataValue != null) {
+                            bmp = BitmapFactory.decodeByteArray(dataValue, 0, dataValue.length);
+                    }
                     String description = cursor.getString(cursor.getColumnIndex("description"));
 
                     ItemEntity item = new ItemEntity();
@@ -113,6 +115,7 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                     item.setBrand(brand);
                     item.setItemName(itemName);
                     item.setDescription(description);
+                    item.setImage(bmp);
                     mItems.add(item);
 
                 } while (cursor.moveToNext());
