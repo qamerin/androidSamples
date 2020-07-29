@@ -64,7 +64,12 @@ public class AddItemArrayListViewAdapter extends ArrayAdapter<ItemEntity> {
 
         // サムネイル画像を設定
         ImageView thumbnail = (ImageView)view.findViewById(R.id.imageView);
-        thumbnail.setImageBitmap(item.getImage());
+        if(item.getImage()!=null){
+            thumbnail.setImageBitmap(item.getImage());
+
+        }else{
+            thumbnail.setImageResource(R.drawable.no_image);
+        }
 
         // Category
         TextView category = (TextView)view.findViewById(R.id.category);

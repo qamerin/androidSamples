@@ -28,14 +28,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     // ちょっと冗長的ですが分かり易くするために
     private static final int[] photos = {
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
     };
 
     @Override

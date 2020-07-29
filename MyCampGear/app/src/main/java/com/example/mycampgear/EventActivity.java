@@ -38,14 +38,14 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
 
     // ちょっと冗長的ですが分かり易くするために
     private static final int[] photos = {
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
     };
 
     private List<ItemEntity> mItems = new ArrayList<>();

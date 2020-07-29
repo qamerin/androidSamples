@@ -45,14 +45,14 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
 
     // ちょっと冗長的ですが分かり易くするために
     private static final int[] photos = {
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
-            R.drawable.profile,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
+            R.drawable.no_image,
     };
 
     @Override
