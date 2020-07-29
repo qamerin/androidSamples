@@ -9,6 +9,8 @@ public class ItemEntity {
     private String description = null;
     private String brand = null;
     private String itemName = null;
+    private Bitmap image = null;
+
 
     public Bitmap getImage() {
         return image;
@@ -18,7 +20,6 @@ public class ItemEntity {
         this.image = image;
     }
 
-    private Bitmap image = null;
 
     public int getItemId() {
         return itemId;

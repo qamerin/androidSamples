@@ -26,34 +26,34 @@ import com.example.mycampgear.entity.ItemEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddItemActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class AddItemActivity extends AppCompatActivity {
 
 
     ListView listView = null;
 
-    private static final String[] scenes = {
-            "サーカスTC",
-            "Wroxall",
-            "サーカスTC",
-            "Ryde",
-            "StLawrence",
-            "Lake",
-            "Sandown",
-            "Shanklin"
-    };
-
-
-    // ちょっと冗長的ですが分かり易くするために
-    private static final int[] photos = {
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-    };
+//    private static final String[] scenes = {
+//            "サーカスTC",
+//            "Wroxall",
+//            "サーカスTC",
+//            "Ryde",
+//            "StLawrence",
+//            "Lake",
+//            "Sandown",
+//            "Shanklin"
+//    };
+//
+//
+//    // ちょっと冗長的ですが分かり易くするために
+//    private static final int[] photos = {
+//            R.drawable.no_image,
+//            R.drawable.no_image,
+//            R.drawable.no_image,
+//            R.drawable.no_image,
+//            R.drawable.no_image,
+//            R.drawable.no_image,
+//            R.drawable.no_image,
+//            R.drawable.no_image,
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,9 +145,6 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
         // 選択の方式の設定
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        // クリックリスナーをセット
-        listView.setOnItemClickListener(this);
-
         View add_btn = findViewById(R.id.add_item_btn);
         add_btn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -202,44 +199,21 @@ public class AddItemActivity extends AppCompatActivity implements AdapterView.On
                     } else {
                         Log.i("Checkbox", tv.getText().toString() + "はfalseです。");
                     }
-
-
-
                 }
 
                 // clickされたpositionのtextとphotoのID
                 Intent intentToEventPage = new Intent(AddItemActivity.this,
                         EventActivity.class);
 
-                String selectedText = scenes[0];
-                int selectedPhoto = photos[0];
+//                String selectedText = scenes[0];
+//                int selectedPhoto = photos[0];
                 // インテントにセット
                 intentToEventPage.putExtra("EventId", eventId);
-                intentToEventPage.putExtra("Text", selectedText);
-                intentToEventPage.putExtra("Photo", selectedPhoto);
+//                intentToEventPage.putExtra("Text", selectedText);
+//                intentToEventPage.putExtra("Photo", selectedPhoto);
                 startActivity(intentToEventPage);
             }
         });
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View v,
-                            int position, long id) {
-
-        System.out.println("clicked");
-
-        Intent intent = new Intent(
-                this.getApplicationContext(), DetailActivity.class);
-
-        // clickされたpositionのtextとphotoのID
-        String selectedText = scenes[position];
-        int selectedPhoto = photos[position];
-        // インテントにセット
-        intent.putExtra("Text", selectedText);
-        intent.putExtra("Photo", selectedPhoto);
-
-        // SubActivityへ遷移
-        startActivity(intent);
     }
 
     private void toastMake(String message, int x, int y){

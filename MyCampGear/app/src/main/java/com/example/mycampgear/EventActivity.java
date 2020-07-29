@@ -19,22 +19,13 @@ import android.widget.TextView;
 
 import com.example.mycampgear.adapter.ItemListViewAdapter;
 import com.example.mycampgear.db.EventOpenHelper;
+import com.example.mycampgear.entity.EventEntity;
 import com.example.mycampgear.entity.ItemEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
-//    private static final String[] scenes = {
-//            "アメニティ・ドーム",
-//            "Wroxall",
-//            "Whitewell",
-//            "Ryde",
-//            "StLawrence",
-//            "Lake",
-//            "Sandown",
-//            "Shanklin"
-//    };
 
     // ちょっと冗長的ですが分かり易くするために
     private static final int[] photos = {
@@ -49,6 +40,7 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
     };
 
     private List<ItemEntity> mItems = new ArrayList<>();
+    private EventEntity event = new EventEntity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,33 +56,42 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
         Intent intent = getIntent();
         // MainActivityからintentで受け取ったものを取り出す
         final int eventId = intent.getIntExtra("EventId",0);
-        String selectedText = intent.getStringExtra("Text");
-        String selectedDate = intent.getStringExtra("Date");
-        String selectedDescription = intent.getStringExtra("Description");
-
-        int selectedPhoto = intent.getIntExtra("Photo", 0);
-
-        TextView textView = findViewById(R.id.selected_event);
-        textView.setText(selectedText);
-        TextView dateView = findViewById(R.id.selected_date);
-        dateView.setText(selectedDate);
-        TextView descriptionView = findViewById(R.id.selected_description);
-        descriptionView.setText(selectedDescription);
-        ImageView  imageView = findViewById(R.id.selected_photo);
-        imageView.setImageResource(selectedPhoto);
-
-
-
 
         SQLiteOpenHelper helper = new EventOpenHelper(this);
         SQLiteDatabase database = null;
+        Cursor cursorTEvent = null;
         Cursor cursorTItem = null;
         Cursor cursorMItem = null;
 
-//        List<ItemEntity> mItems = new ArrayList<>();
-
         try {
             database = helper.getReadableDatabase();
+            cursorTEvent = database.query("T_Event", null, "_event_id=?", new String[]{String.valueOf(eventId)}, null, null, null, null);
+            if (cursorTEvent.moveToFirst()) {
+                do {
+                    String title = cursorTEvent.getString(cursorTEvent.getColumnIndex("title"));
+                    String date = cursorTEvent.getString(cursorTEvent.getColumnIndex("date"));
+                    String description = cursorTEvent.getString(cursorTEvent.getColumnIndex("description"));
+                    event.setEventId(eventId);
+                    event.setTitle(title);
+                    event.setDate(date);
+                    event.setDescription(description);
+                } while (cursorTEvent.moveToNext());
+            }
+
+            if(event != null) {
+                TextView textView = findViewById(R.id.selected_event);
+                textView.setText(event.getTitle());
+                TextView dateView = findViewById(R.id.selected_date);
+                dateView.setText(event.getDate());
+                TextView descriptionView = findViewById(R.id.selected_description);
+                descriptionView.setText(event.getDescription());
+                ImageView  imageView = findViewById(R.id.selected_photo);
+                if(event.getImage()!=null){
+                    imageView.setImageBitmap(event.getImage());
+                }else{
+                    imageView.setImageResource(R.drawable.no_image);
+                }
+            }
 
             cursorTItem = database.query("T_ITEM", null, "event_id=?", new String[]{String.valueOf(eventId)}, null, null, null, null);
 
@@ -145,7 +146,6 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
         // inflate するためにadapterに引数として渡す
         BaseAdapter adapter = new ItemListViewAdapter(this.getApplicationContext(),
                 R.layout.list_item,mItems);
-//                R.layout.list_item, scenes, photos);
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);
