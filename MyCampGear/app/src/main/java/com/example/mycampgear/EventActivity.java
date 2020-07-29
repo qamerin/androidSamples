@@ -27,17 +27,6 @@ import java.util.List;
 
 public class EventActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
-    // ちょっと冗長的ですが分かり易くするために
-    private static final int[] photos = {
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-    };
 
     private List<ItemEntity> mItems = new ArrayList<>();
     private EventEntity event = new EventEntity();
@@ -175,17 +164,8 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
         System.out.println("clicked");
         Intent intent = new Intent(
                 this.getApplicationContext(), DetailActivity.class);
-
-        // clickされたpositionのtextとphotoのID
-//        String selectedText = scenes[position];
-        String selectedText = mItems.get(position).getItemName() ;
-
-        int selectedPhoto = photos[position];
-        // インテントにセット
-        intent.putExtra("Text", selectedText);
-        intent.putExtra("Photo", selectedPhoto);
-
-        // SubActivityへ遷移
+        intent.putExtra("itemId", String.valueOf(mItems.get(position).getItemId()));
+        // Detailctivityへ遷移
         startActivity(intent);
     }
 }
