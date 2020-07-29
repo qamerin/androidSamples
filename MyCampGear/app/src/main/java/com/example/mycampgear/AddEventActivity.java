@@ -5,12 +5,16 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +23,7 @@ import androidx.fragment.app.DialogFragment;
 import com.example.mycampgear.common.DatePick;
 import com.example.mycampgear.db.EventOpenHelper;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,10 +33,29 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
 
     private EditText editTextDate;
 
+    private final static int RESULT_CAMERA = 1001;
+    private ImageView imageView;
+
+    private Bitmap bitmap;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+
+
+        imageView = findViewById(R.id.image_view);
+
+        Button cameraButton = findViewById(R.id.camera_button);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, RESULT_CAMERA);
+            }
+        });
+
 
         editTextDate = findViewById(R.id.label_branc);
 
@@ -61,6 +85,12 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                     cv.put("date",
                             new SimpleDateFormat("yyyy-MM-dd").format(dateObject));
                     cv.put("description", editTextContent.getText().toString());
+                    if (bitmap != null) {
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        byte[] bytes = byteArrayOutputStream.toByteArray();
+                        cv.put("image", bytes);
+                    }
 
                     database.insert("T_EVENT", null, cv);
 
@@ -103,4 +133,31 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         String str = String.format(Locale.US, "%d/%d/%d",year, monthOfYear+1, dayOfMonth);
         editTextDate.setText(str);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_CAMERA) {
+//            Bitmap bitmap;
+            // cancelしたケースも含む
+            if (data.getExtras() == null) {
+                Log.d("debug", "cancel ?");
+                return;
+            } else {
+                bitmap = (Bitmap) data.getExtras().get("data");
+                if (bitmap != null) {
+                    // 画像サイズを計測
+                    int bmpWidth = bitmap.getWidth();
+                    int bmpHeight = bitmap.getHeight();
+                    Log.d("debug", String.format("w= %d", bmpWidth));
+                    Log.d("debug", String.format("h= %d", bmpHeight));
+                }
+            }
+
+            imageView.setImageBitmap(bitmap);
+        }
+    }
+
+
+
 }

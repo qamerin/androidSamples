@@ -14,6 +14,7 @@ public class EventOpenHelper extends SQLiteOpenHelper {
             " _event_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             " title TEXT," +
             " date DATE," +
+            " image BLOB," +
             " description TEXT" +
             ")";
 
