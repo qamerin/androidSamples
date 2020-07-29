@@ -108,6 +108,13 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
                             item.setItemName(itemName);
                             item.setImage(bmp);
                             item.setDescription(description);
+
+                            // if already exist don't add
+                            for(ItemEntity entity:mItems){
+                                if(entity.getItemId() == item.getItemId()){
+                                    continue;
+                                }
+                            }
                             mItems.add(item);
 
                         }while (cursorMItem.moveToNext());
@@ -129,6 +136,9 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
 
         // ListViewのインスタンスを生成
         ListView listView = findViewById(R.id.list_view);
+
+
+
 
         // BaseAdapter を継承したadapterのインスタンスを生成
         // レイアウトファイル list.xml を activity_main.xml に
