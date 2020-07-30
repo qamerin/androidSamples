@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.mycampgear.adapter.EventListViewAdapter;
 import com.example.mycampgear.db.EventOpenHelper;
@@ -71,7 +72,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     event.setDate(date);
                     event.setDescription(description);
                     event.setImage(bmp);
-                    tEvents.add(event);
+
+                    // duplicate check for events
+                    boolean isEventExists=false;
+                    for(EventEntity entity:tEvents){
+                        if(entity.getEventId() == eventId){
+                            isEventExists = true;
+                        }
+                    }
+                    if(!isEventExists){
+                        tEvents.add(event);
+                    }
 
                 } while (cursor.moveToNext());
             }
