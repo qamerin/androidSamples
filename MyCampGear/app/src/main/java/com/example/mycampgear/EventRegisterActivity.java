@@ -29,7 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class EventRegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private EditText editTextDate;
 
@@ -73,7 +73,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
                 Date dateObject;
 
-                SQLiteOpenHelper helper = new EventOpenHelper(AddEventActivity.this);
+                SQLiteOpenHelper helper = new EventOpenHelper(EventRegisterActivity.this);
                 SQLiteDatabase database = null;
 
                 try {

@@ -25,7 +25,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".AddEventActivity"
+            android:name=".EventRegisterActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

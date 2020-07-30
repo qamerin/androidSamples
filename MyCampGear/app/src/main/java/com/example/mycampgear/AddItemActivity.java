@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,33 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddItemActivity extends AppCompatActivity {
-
-
     ListView listView = null;
-
-//    private static final String[] scenes = {
-//            "サーカスTC",
-//            "Wroxall",
-//            "サーカスTC",
-//            "Ryde",
-//            "StLawrence",
-//            "Lake",
-//            "Sandown",
-//            "Shanklin"
-//    };
-//
-//
-//    // ちょっと冗長的ですが分かり易くするために
-//    private static final int[] photos = {
-//            R.drawable.no_image,
-//            R.drawable.no_image,
-//            R.drawable.no_image,
-//            R.drawable.no_image,
-//            R.drawable.no_image,
-//            R.drawable.no_image,
-//            R.drawable.no_image,
-//            R.drawable.no_image,
-//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +48,6 @@ public class AddItemActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
     }
 
 
@@ -165,6 +135,30 @@ public class AddItemActivity extends AppCompatActivity {
                 SQLiteOpenHelper helper = new EventOpenHelper(AddItemActivity.this);
                 SQLiteDatabase database = null;
 
+                Cursor cursorTItem = null;
+                List<String> alreadyItems = new ArrayList<>();
+
+                try {
+                    database = helper.getWritableDatabase();
+                    cursorTItem = database.query("T_ITEM", null, "event_id=?", new String[]{String.valueOf(eventId)}, null, null, null, null);
+
+                    if (cursorTItem.moveToFirst()) {
+                        do {
+                            String itemId = cursorTItem.getString(cursorTItem.getColumnIndex("item_id"));
+                            alreadyItems.add(itemId);
+
+                        } while (cursorTItem.moveToNext());
+                    }
+
+                } catch (Exception e) {
+                    Log.e(getLocalClassName(), "DBエラー発生", e);
+                } finally {
+                    if (database != null) {
+                        database.close();
+                    }
+                }
+
+
 
                 // リストビューのチェック状態をログに出力する
                 ListView lv = findViewById(R.id.list_add_view);
@@ -182,6 +176,12 @@ public class AddItemActivity extends AppCompatActivity {
                             database = helper.getWritableDatabase();
 
                             TextView itemId = view.findViewById(R.id.itemId);
+                            for(String key:alreadyItems){
+                                if(key.equals(itemId.getText().toString())){
+                                    continue;
+                                }
+                            }
+
                             ContentValues cv = new ContentValues();
                             cv.put("event_id", String.valueOf(eventId));
                             cv.put("item_id", itemId.getText().toString());
@@ -200,6 +200,10 @@ public class AddItemActivity extends AppCompatActivity {
                         Log.i("Checkbox", tv.getText().toString() + "はfalseです。");
                     }
                 }
+
+
+
+
 
                 // clickされたpositionのtextとphotoのID
                 Intent intentToEventPage = new Intent(AddItemActivity.this,

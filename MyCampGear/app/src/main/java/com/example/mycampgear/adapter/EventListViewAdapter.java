@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mycampgear.R;
+import com.example.mycampgear.entity.EventEntity;
+
+import java.util.List;
 
 public class EventListViewAdapter extends BaseAdapter {
 
@@ -20,22 +23,14 @@ public class EventListViewAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private int itemLayoutId;
-    private String[] titles;
-    private String[] dates;
-    private String[] descriptions;
-    private int[] ids;
-
+    private List<EventEntity> eventEntities;
     public EventListViewAdapter(Context context, int itemLayoutId,
-                                String[] scenes, String[] dates, String[] descriptions,int[] photos) {
+                                List<EventEntity> eventEntities) {
         super();
         this.inflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.itemLayoutId = itemLayoutId;
-        this.titles = scenes;
-        this.dates = dates;
-        this.descriptions = descriptions;
-
-        this.ids = photos;
+        this.eventEntities = eventEntities;
     }
 
     @Override
@@ -50,7 +45,6 @@ public class EventListViewAdapter extends BaseAdapter {
             holder.textView = convertView.findViewById(R.id.textView);
             holder.dateView = convertView.findViewById(R.id.dateView);
             holder.descriptionView = convertView.findViewById(R.id.descptionView);
-
             holder.imageView = convertView.findViewById(R.id.imageView);
             convertView.setTag(holder);
         }
@@ -59,20 +53,24 @@ public class EventListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        // holder の imageView にセット
-        holder.imageView.setImageResource(ids[position]);
         // 現在の position にあるファイル名リストを holder の textView にセット
-        holder.textView.setText(titles[position]);
-        holder.dateView.setText(dates[position]);
-        holder.descriptionView.setText(descriptions[position]);
+        holder.textView.setText(eventEntities.get(position).getTitle());
+        holder.dateView.setText(eventEntities.get(position).getDate());
+        holder.descriptionView.setText(eventEntities.get(position).getDescription());
 
+        // holder の imageView にセット
+        if(eventEntities.get(position).getImage()!=null){
+            holder.imageView.setImageBitmap(eventEntities.get(position).getImage());
+        }else{
+            holder.imageView.setImageResource(R.drawable.no_image);
+        }
         return convertView;
     }
 
     @Override
     public int getCount() {
         // texts 配列の要素数
-        return titles.length;
+        return eventEntities.size();
     }
 
     @Override

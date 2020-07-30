@@ -60,10 +60,16 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
                     String title = cursorTEvent.getString(cursorTEvent.getColumnIndex("title"));
                     String date = cursorTEvent.getString(cursorTEvent.getColumnIndex("date"));
                     String description = cursorTEvent.getString(cursorTEvent.getColumnIndex("description"));
+                    byte[] dataValue = cursorTEvent.getBlob(cursorTEvent.getColumnIndex("image")); //image
+                    Bitmap bmp = null;
+                    if (dataValue != null) {
+                        bmp = BitmapFactory.decodeByteArray(dataValue, 0, dataValue.length);
+                    }
                     event.setEventId(eventId);
                     event.setTitle(title);
                     event.setDate(date);
                     event.setDescription(description);
+                    event.setImage(bmp);
                 } while (cursorTEvent.moveToNext());
             }
 

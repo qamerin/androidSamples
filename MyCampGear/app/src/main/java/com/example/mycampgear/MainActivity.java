@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,28 +17,13 @@ import android.widget.ListView;
 
 import com.example.mycampgear.adapter.EventListViewAdapter;
 import com.example.mycampgear.db.EventOpenHelper;
+import com.example.mycampgear.entity.EventEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-
-    private Integer[] eventIdArray = null;
-    private String[] eventArray = null;
-    private String[] dateArray = null;
-    private String[] descriptionArray = null;
-
-    // ちょっと冗長的ですが分かり易くするために
-    private static final int[] photos = {
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-            R.drawable.no_image,
-    };
+    private List<EventEntity> tEvents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         add_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View vew){
-                Intent intent = new Intent(MainActivity.this, AddEventActivity.class);
+                Intent intent = new Intent(MainActivity.this, EventRegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -58,10 +45,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onResume() {
         super.onResume();
         // 全てのEventのタイトルを取得し、Listに格納する
-        List<Integer> eventIdList = new ArrayList<>();
-        List<String> eventList = new ArrayList<>();
-        List<String> dateList = new ArrayList<>();
-        List<String> descriptionList = new ArrayList<>();
         SQLiteOpenHelper helper = new EventOpenHelper(this);
         SQLiteDatabase database = null;
         Cursor cursor = null;
@@ -77,10 +60,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     String title = cursor.getString(cursor.getColumnIndex("title"));
                     String date = cursor.getString(cursor.getColumnIndex("date"));
                     String description = cursor.getString(cursor.getColumnIndex("description"));
-                    eventIdList.add(eventId);
-                    eventList.add(title);
-                    dateList.add(date);
-                    descriptionList.add(description);
+                    byte[] dataValue = cursor.getBlob(cursor.getColumnIndex("image")); //image
+                    Bitmap bmp = null;
+                    if (dataValue != null) {
+                        bmp = BitmapFactory.decodeByteArray(dataValue, 0, dataValue.length);
+                    }
+                    EventEntity event = new EventEntity();
+                    event.setEventId(eventId);
+                    event.setTitle(title);
+                    event.setDate(date);
+                    event.setDescription(description);
+                    event.setImage(bmp);
+                    tEvents.add(event);
+
                 } while (cursor.moveToNext());
             }
 
@@ -94,10 +86,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 cursor.close();
             }
         }
-        eventIdArray = eventIdList.toArray(new Integer[eventIdList.size()]);
-        eventArray = eventList.toArray(new String[eventList.size()]);
-        dateArray = dateList.toArray(new String[dateList.size()]);
-        descriptionArray = descriptionList.toArray(new String[descriptionList.size()]);
 
         // ListViewのインスタンスを生成
         ListView listView = findViewById(R.id.list_view);
@@ -106,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // レイアウトファイル list.xml を activity_main.xml に
         // inflate するためにadapterに引数として渡す
         BaseAdapter adapter = new EventListViewAdapter(this.getApplicationContext(),
-                R.layout.list_event, eventArray,dateArray,descriptionArray ,photos);
+                R.layout.list_event, tEvents);
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);
@@ -122,20 +110,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent intent = new Intent(
                 this.getApplicationContext(), EventActivity.class);
 
-        // clickされたpositionのtextとphotoのID
-        int selectedEventId= eventIdArray[position];
-        String selectedTitle = eventArray[position];
-        String selectedDate = dateArray[position];
-        String selectedDescription = descriptionArray[position];
-        int selectedPhoto = photos[position];
         // インテントにセット
-        intent.putExtra("EventId", selectedEventId);
-        intent.putExtra("Text", selectedTitle);
-        intent.putExtra("Date", selectedDate);
-        intent.putExtra("Description", selectedDescription);
-        intent.putExtra("Photo", selectedPhoto);
-
-        // SubActivityへ遷移
+        intent.putExtra("EventId",tEvents.get(position).getEventId());
+        // EventActivityへ遷移
         startActivity(intent);
     }
 }
