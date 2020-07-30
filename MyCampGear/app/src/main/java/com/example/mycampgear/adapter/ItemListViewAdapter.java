@@ -47,9 +47,9 @@ public class ItemListViewAdapter extends BaseAdapter {
             // ViewHolder を生成
             holder = new ViewHolder();
             holder.brand = convertView.findViewById(R.id.brand);
-            holder.itemName = convertView.findViewById(R.id.itemName);
+            holder.itemName = convertView.findViewById(R.id.label_itemName);
             holder.imageView =convertView.findViewById(R.id.imageView);
-            holder.category =convertView.findViewById(R.id.category);
+            holder.category =convertView.findViewById(R.id.label_category);
             holder.description = convertView.findViewById(R.id.descption);
             convertView.setTag(holder);
         }

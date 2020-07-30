@@ -165,7 +165,7 @@ public class AddItemActivity extends AppCompatActivity {
                 for(int i = 0;i < lv.getCount();i++) {
                     AddItemArrayListViewAdapter adapter = (AddItemArrayListViewAdapter)lv.getAdapter();
                     View view = adapter.getView(i,null,lv);
-                    TextView tv = view.findViewById(R.id.category);
+                    TextView tv = view.findViewById(R.id.label_category);
 
                     Log.i("Category : ", tv.getText().toString());
                     CheckBox cb = view.findViewById(R.id.checkbox_1);

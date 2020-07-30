@@ -74,7 +74,7 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
             }
 
             if(event != null) {
-                TextView textView = findViewById(R.id.selected_event);
+                TextView textView = findViewById(R.id.label_itemName);
                 textView.setText(event.getTitle());
                 TextView dateView = findViewById(R.id.selected_date);
                 dateView.setText(event.getDate());

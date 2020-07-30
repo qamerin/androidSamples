@@ -36,6 +36,11 @@
             android:name=".ItemRegisterActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".ItemEditActivity"
+            android:label="@string/app_name" >
+        </activity>
+
     </application>
 
 </manifest>

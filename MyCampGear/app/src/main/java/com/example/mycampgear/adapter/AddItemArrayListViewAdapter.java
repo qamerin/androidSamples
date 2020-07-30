@@ -72,7 +72,7 @@ public class AddItemArrayListViewAdapter extends ArrayAdapter<ItemEntity> {
         }
 
         // Category
-        TextView category = (TextView)view.findViewById(R.id.category);
+        TextView category = (TextView)view.findViewById(R.id.label_category);
         category.setText(item.getCategory());
 
         TextView itemId = (TextView)view.findViewById(R.id.itemId);
@@ -81,7 +81,7 @@ public class AddItemArrayListViewAdapter extends ArrayAdapter<ItemEntity> {
         TextView brand = (TextView)view.findViewById(R.id.brand);
         brand.setText(item.getBrand());
 
-        TextView itemName = (TextView)view.findViewById(R.id.itemName);
+        TextView itemName = (TextView)view.findViewById(R.id.label_itemName);
         itemName.setText(item.getItemName());
 
         TextView description = (TextView)view.findViewById(R.id.descption);

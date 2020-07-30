@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="378dp"
+        android:layout_height="274dp"
+        android:contentDescription="@string/description"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <Button
+        android:id="@+id/camera_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="@string/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <LinearLayout
+        android:layout_width="378dp"
+        android:layout_height="62dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/label_category"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/category" />
+
+        <EditText
+            android:id="@+id/input_category"
+            android:layout_width="269dp"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Tent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/label_brand"
+            android:layout_width="186dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Brand" />
+
+        <EditText
+            android:id="@+id/input_brand"
+            android:layout_width="352dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Snowpeak" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/label_item"
+            android:layout_width="166dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Item" />
+
+        <EditText
+            android:id="@+id/input_item"
+            android:layout_width="333dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Fire Grill" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/label_description"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Description" />
+
+        <EditText
+            android:id="@+id/input_description"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Very Good" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_apply" />
+</LinearLayout>
