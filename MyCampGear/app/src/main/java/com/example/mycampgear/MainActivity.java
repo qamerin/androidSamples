@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     EventEntity event = new EventEntity();
                     event.setEventId(eventId);
                     event.setTitle(title);
-                    event.setDate(date);
+                    event.setDate(date.replaceAll("-","/"));
                     event.setDescription(description);
                     event.setImage(bmp);
 

@@ -67,7 +67,7 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
                     }
                     event.setEventId(eventId);
                     event.setTitle(title);
-                    event.setDate(date);
+                    event.setDate(date.replaceAll("-","/"));
                     event.setDescription(description);
                     event.setImage(bmp);
                 } while (cursorTEvent.moveToNext());

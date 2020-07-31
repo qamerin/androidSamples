@@ -90,7 +90,7 @@ public class EventEditActivity extends AppCompatActivity implements DatePickerDi
                 TextView eventNameView = findViewById(R.id.input_eventName);
                 eventNameView.setText(event.getTitle());
                 TextView dateView = findViewById(R.id.input_date);
-                dateView.setText(event.getDate());
+                dateView.setText(event.getDate().replaceAll("-","/"));
                 TextView descriptionView = findViewById(R.id.input_description);
                 descriptionView.setText(event.getDescription());
                 ImageView  imageView = findViewById(R.id.image_view);
