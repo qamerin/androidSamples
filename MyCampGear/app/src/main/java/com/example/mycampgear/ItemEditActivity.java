@@ -151,7 +151,7 @@ public class ItemEditActivity extends AppCompatActivity {
 
 
                     Intent intent = new Intent(ItemEditActivity.this,
-                            DetailActivity.class);
+                            ItemDetailActivity.class);
 
                     intent.putExtra("itemId", item.getItemId());
                     startActivity(intent);

@@ -25,7 +25,7 @@ import com.example.mycampgear.entity.ItemEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class EventDetailActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
 
     private List<ItemEntity> mItems = new ArrayList<>();
@@ -34,7 +34,7 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event);
+        setContentView(R.layout.activity_event_detail);
 
 
     }
@@ -163,7 +163,7 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View vew){
 
-                Intent intent = new Intent(EventActivity.this, AddItemActivity.class);
+                Intent intent = new Intent(EventDetailActivity.this, ItemListActivity.class);
                 intent.putExtra("EventId", eventId);
                 startActivity(intent);
 
@@ -179,7 +179,7 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
 
         System.out.println("clicked");
         Intent intent = new Intent(
-                this.getApplicationContext(), DetailActivity.class);
+                this.getApplicationContext(), ItemDetailActivity.class);
         intent.putExtra("itemId", mItems.get(position).getItemId());
         // Detailctivityへ遷移
         startActivity(intent);

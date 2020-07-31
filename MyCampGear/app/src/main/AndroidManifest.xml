@@ -17,11 +17,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EventActivity"
+            android:name=".EventDetailActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".DetailActivity"
+            android:name=".ItemDetailActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -29,7 +29,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".AddItemActivity"
+            android:name=".ItemListActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

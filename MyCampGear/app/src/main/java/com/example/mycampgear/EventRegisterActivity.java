@@ -42,7 +42,7 @@ public class EventRegisterActivity extends AppCompatActivity implements DatePick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event);
+        setContentView(R.layout.activity_event_register);
 
 
         imageView = findViewById(R.id.image_view);

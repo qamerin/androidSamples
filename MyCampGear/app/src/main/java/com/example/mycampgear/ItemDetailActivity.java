@@ -17,13 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mycampgear.db.EventOpenHelper;
 import com.example.mycampgear.entity.ItemEntity;
 
-public class DetailActivity extends AppCompatActivity {
+public class ItemDetailActivity extends AppCompatActivity {
     private ItemEntity item = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_item_detail);
 
         Intent intent = getIntent();
         // MainActivityからintentで受け取ったものを取り出す
@@ -87,7 +87,7 @@ public class DetailActivity extends AppCompatActivity {
         add_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View vew){
-                Intent intent = new Intent(DetailActivity.this,
+                Intent intent = new Intent(ItemDetailActivity.this,
                         ItemEditActivity.class);
 
                 intent.putExtra("itemId", item.getItemId());

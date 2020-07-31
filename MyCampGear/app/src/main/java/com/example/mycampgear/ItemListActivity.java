@@ -25,13 +25,13 @@ import com.example.mycampgear.entity.ItemEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddItemActivity extends AppCompatActivity {
+public class ItemListActivity extends AppCompatActivity {
     ListView listView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_item);
+        setContentView(R.layout.activity_item_list);
         Intent intent = getIntent();
         final int eventId = intent.getIntExtra("EventId",0);
 
@@ -41,7 +41,7 @@ public class AddItemActivity extends AppCompatActivity {
             public void onClick(View vew){
 
                 // clickされたpositionのtextとphotoのID
-                Intent intent = new Intent(AddItemActivity.this,
+                Intent intent = new Intent(ItemListActivity.this,
                         ItemRegisterActivity.class);
 
                 intent.putExtra("EventId", eventId);
@@ -104,7 +104,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         // ListViewのインスタンスを生成
         listView = findViewById(R.id.list_add_view);
-        AddItemArrayListViewAdapter adapter = new AddItemArrayListViewAdapter(this, R.layout.list_add_item, mItems);
+        AddItemArrayListViewAdapter adapter = new AddItemArrayListViewAdapter(this, R.layout.list_item_select, mItems);
 
         // ListViewにadapterをセット
         listView.setAdapter(adapter);
@@ -132,7 +132,7 @@ public class AddItemActivity extends AppCompatActivity {
                 int eventId = intent.getIntExtra("EventId",0);
                 System.out.println("Event Id : "+String.valueOf(eventId));
 
-                SQLiteOpenHelper helper = new EventOpenHelper(AddItemActivity.this);
+                SQLiteOpenHelper helper = new EventOpenHelper(ItemListActivity.this);
                 SQLiteDatabase database = null;
 
                 Cursor cursorTItem = null;
@@ -206,8 +206,8 @@ public class AddItemActivity extends AppCompatActivity {
 
 
                 // clickされたpositionのtextとphotoのID
-                Intent intentToEventPage = new Intent(AddItemActivity.this,
-                        EventActivity.class);
+                Intent intentToEventPage = new Intent(ItemListActivity.this,
+                        EventDetailActivity.class);
 
 //                String selectedText = scenes[0];
 //                int selectedPhoto = photos[0];

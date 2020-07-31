@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.mycampgear.adapter.EventListViewAdapter;
 import com.example.mycampgear.db.EventOpenHelper;
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             int position, long id) {
 
         Intent intent = new Intent(
-                this.getApplicationContext(), EventActivity.class);
+                this.getApplicationContext(), EventDetailActivity.class);
 
         // インテントにセット
         intent.putExtra("EventId",tEvents.get(position).getEventId());
