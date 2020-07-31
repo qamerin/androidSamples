@@ -2,9 +2,11 @@ package com.example.mycampgear;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +23,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.mycampgear.common.DatePick;
 import com.example.mycampgear.db.EventOpenHelper;
+import com.example.mycampgear.entity.ItemEntity;
 
 import java.io.ByteArrayOutputStream;
 
@@ -30,13 +34,78 @@ public class ItemEditActivity extends AppCompatActivity {
     private ImageView imageView;
 
     private Bitmap bitmap;
+    private ItemEntity item = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_edit);
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intent intent = getIntent();
+        // MainActivityからintentで受け取ったものを取り出す
+        int itemId = intent.getIntExtra("itemId",0);
+
+        SQLiteOpenHelper helper = new EventOpenHelper(this);
+        SQLiteDatabase database = null;
+        Cursor cursorMItem = null;
+
+        try {
+            database = helper.getReadableDatabase();
+            cursorMItem = database.query("M_ITEM", null, "_item_id=?", new String[]{String.valueOf(itemId)}, null, null, null, null);
+
+            if (cursorMItem.moveToFirst()) {
+                do {
+                    String category = cursorMItem.getString(cursorMItem.getColumnIndex("category"));
+                    String brand = cursorMItem.getString(cursorMItem.getColumnIndex("brand"));
+                    String itemName = cursorMItem.getString(cursorMItem.getColumnIndex("item_name"));
+                    String description = cursorMItem.getString(cursorMItem.getColumnIndex("description"));
+                    byte[] dataValue = cursorMItem.getBlob(cursorMItem.getColumnIndex("image")); //image
+                    Bitmap bmp = null;
+                    if (dataValue != null) {
+                        bmp = BitmapFactory.decodeByteArray(dataValue, 0, dataValue.length);
+                    }
+                    item = new ItemEntity();
+                    item.setItemId(itemId);
+                    item.setCategory(category);
+                    item.setBrand(brand);
+                    item.setItemName(itemName);
+                    item.setImage(bmp);
+                    item.setDescription(description);
+
+                }while (cursorMItem.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e(getLocalClassName(), "DBエラー発生", e);
+        } finally {
+            if (database != null) {
+                database.close();
+            }
+        }
+
+
+        TextView categoryView = findViewById(R.id.input_category);
+        categoryView.setText(item.getCategory());
+
+        TextView brandView = findViewById(R.id.input_brand);
+        brandView.setText(item.getBrand());
+
+        TextView itemNameView = findViewById(R.id.input_item);
+        itemNameView.setText(item.getItemName());
+
+        TextView descriptionView = findViewById(R.id.input_description);
+        descriptionView.setText(item.getDescription());
+
         imageView = findViewById(R.id.image_view);
+        if(item.getImage()!=null){
+            imageView.setImageBitmap(item.getImage());
+        }else{
+            imageView.setImageResource(R.drawable.no_image);
+        }
 
         Button cameraButton = findViewById(R.id.camera_button);
         cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -75,13 +144,17 @@ public class ItemEditActivity extends AppCompatActivity {
                         byte[] bytes = byteArrayOutputStream.toByteArray();
                         cv.put("image", bytes);
                     }
-                    database.insert("M_ITEM", null, cv);
+                    database.update("M_ITEM", cv,"_item_id=?", new String[]{String.valueOf(item.getItemId())} );
 
-                    String toastMessage = "アイテムの追加が行われました";
+                    String toastMessage = "アイテムの更新が行われました";
                     toastMake(toastMessage, 0, -200);
 
-                    // 遷移元の画面に戻るため、finishメソッドを呼び出す
-                    finish();
+
+                    Intent intent = new Intent(ItemEditActivity.this,
+                            DetailActivity.class);
+
+                    intent.putExtra("itemId", item.getItemId());
+                    startActivity(intent);
 
 
                 } catch (Exception e) {
@@ -94,8 +167,11 @@ public class ItemEditActivity extends AppCompatActivity {
 
             }
         });
-    }
 
+
+
+
+    }
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePick();
@@ -114,7 +190,6 @@ public class ItemEditActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_CAMERA) {
-//            Bitmap bitmap;
             // cancelしたケースも含む
             if (data.getExtras() == null) {
                 Log.d("debug", "cancel ?");

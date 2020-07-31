@@ -180,7 +180,7 @@ public class EventActivity extends AppCompatActivity implements AdapterView.OnIt
         System.out.println("clicked");
         Intent intent = new Intent(
                 this.getApplicationContext(), DetailActivity.class);
-        intent.putExtra("itemId", String.valueOf(mItems.get(position).getItemId()));
+        intent.putExtra("itemId", mItems.get(position).getItemId());
         // Detailctivityへ遷移
         startActivity(intent);
     }

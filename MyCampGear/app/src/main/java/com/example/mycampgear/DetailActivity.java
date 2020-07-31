@@ -27,7 +27,7 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         // MainActivityからintentで受け取ったものを取り出す
-        String itemId = intent.getStringExtra("itemId");
+        int itemId = intent.getIntExtra("itemId",0);
 
         SQLiteOpenHelper helper = new EventOpenHelper(this);
         SQLiteDatabase database = null;
@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
 
         try {
             database = helper.getReadableDatabase();
-            cursorMItem = database.query("M_ITEM", null, "_item_id=?", new String[]{itemId}, null, null, null, null);
+            cursorMItem = database.query("M_ITEM", null, "_item_id=?", new String[]{String.valueOf(itemId)}, null, null, null, null);
 
             if (cursorMItem.moveToFirst()) {
                 do {
@@ -49,7 +49,7 @@ public class DetailActivity extends AppCompatActivity {
                         bmp = BitmapFactory.decodeByteArray(dataValue, 0, dataValue.length);
                     }
                     item = new ItemEntity();
-                    item.setItemId(Integer.parseInt(itemId));
+                    item.setItemId(itemId);
                     item.setCategory(category);
                     item.setBrand(brand);
                     item.setItemName(itemName);
@@ -92,48 +92,6 @@ public class DetailActivity extends AppCompatActivity {
 
                 intent.putExtra("itemId", item.getItemId());
                 startActivity(intent);
-
-//                intent.putExtra("itemId", String.valueOf(mItems.get(position).getItemId()));
-                // Detailctivityへ遷移
-                startActivity(intent);
-
-//                // タイトルと内容を取得してデータベースに登録する
-//                EditText editTextCategory = findViewById(R.id.input_category);
-//                EditText editTextBrand = findViewById(R.id.input_brand);
-//                EditText editTextItem = findViewById(R.id.input_item);
-//                EditText editTextDesc = findViewById(R.id.input_description);
-//
-//                SQLiteOpenHelper helper = new EventOpenHelper(DetailrActivity.this);
-//                SQLiteDatabase database = null;
-//
-//                try {
-//                    database = helper.getWritableDatabase();
-//
-//                    ContentValues cv = new ContentValues();
-//                    cv.put("category", editTextCategory.getText().toString());
-//                    cv.put("brand", editTextBrand.getText().toString());
-//                    cv.put("item_name", editTextItem.getText().toString());
-//                    cv.put("description", editTextDesc.getText().toString());
-//                    if (bitmap != null) {
-//                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-//                        byte[] bytes = byteArrayOutputStream.toByteArray();
-//                        cv.put("image", bytes);
-//                    }
-//                    database.insert("M_ITEM", null, cv);
-//
-//                    String toastMessage = "アイテムの追加が行われました";
-//                    toastMake(toastMessage, 0, -200);
-//
-
-
-//                } catch (Exception e) {
-//                    Log.e(getLocalClassName(), "DBエラー発生", e);
-//                } finally {
-//                    if (database != null) {
-//                        database.close();
-//                    }
-//                }
 
             }
         });
