@@ -158,6 +158,20 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
         // クリックリスナーをセット
         listView.setOnItemClickListener(this);
 
+        View edit_event_btn = findViewById(R.id.btn_edit);
+        edit_event_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View vew){
+
+                Intent intent = new Intent(EventDetailActivity.this, EventEditActivity.class);
+                intent.putExtra("EventId", eventId);
+                startActivity(intent);
+
+            }
+        });
+
+
+
         View add_btn = findViewById(R.id.add_item_btn);
         add_btn.setOnClickListener(new View.OnClickListener(){
             @Override

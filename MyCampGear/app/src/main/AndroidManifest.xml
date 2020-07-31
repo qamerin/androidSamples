@@ -29,6 +29,11 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name=".EventEditActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <activity
             android:name=".ItemListActivity"
             android:label="@string/app_name" >
         </activity>
